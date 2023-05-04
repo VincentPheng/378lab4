@@ -1,0 +1,40 @@
+[gd_scene load_steps=6 format=3 uid="uid://6l3hiemspl0c"]
+
+[ext_resource type="Texture2D" uid="uid://bhtjiwyq6xfek" path="res://sprites/stapler1.png" id="1_0yjhb"]
+[ext_resource type="Script" path="res://scripts/projectile.gd" id="1_fy78w"]
+[ext_resource type="Texture2D" uid="uid://bg0hyj460m7uc" path="res://sprites/stapler2.png" id="2_kr5d1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4ofkp"]
+size = Vector2(14, 9)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tu4w3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_0yjhb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_kr5d1")
+}],
+"loop": true,
+"name": &"default",
+"speed": 8.0
+}]
+
+[node name="Stapler" type="CharacterBody2D"]
+collision_layer = 8
+collision_mask = 6
+script = ExtResource("1_fy78w")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2.5)
+shape = SubResource("RectangleShape2D_4ofkp")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_tu4w3")
+frame = 1
+frame_progress = 0.113957
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+autostart = true
