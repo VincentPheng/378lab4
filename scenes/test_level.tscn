@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://pfd7m6oxf50v"]
+[gd_scene load_steps=21 format=3 uid="uid://pfd7m6oxf50v"]
 
 [ext_resource type="Script" path="res://scripts/level.gd" id="1_63ffp"]
 [ext_resource type="PackedScene" uid="uid://bhc1flkqys1ud" path="res://instances/player.tscn" id="1_kacfe"]
@@ -10,7 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://r37qtrug375j" path="res://instances/actionable.tscn" id="9_qkufh"]
 [ext_resource type="Resource" uid="uid://bhlik7ev7t51w" path="res://dialogue/dexter_intro.dialogue" id="10_hhgvp"]
 [ext_resource type="Texture2D" uid="uid://c2eylr1e8p161" path="res://sprites/speech_bubble.png" id="11_v2ye5"]
-[ext_resource type="Script" path="res://scripts/SpawnArea.gd" id="12_7offl"]
+[ext_resource type="PackedScene" uid="uid://cavxsqlktuqa2" path="res://instances/spawner.tscn" id="11_wlqac"]
 [ext_resource type="AudioStream" uid="uid://csy5d3535ydhl" path="res://sounds/spotifydown.com - Onward.mp3" id="13_gucee"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_r4gyn"]
@@ -65,8 +65,11 @@ _data = {
 "speech": SubResource("Animation_ocule")
 }
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_3btb0"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3sgx4"]
 size = Vector2(168, 672)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_de65n"]
+size = Vector2(360, 136)
 
 [node name="TestLevel" type="Node2D"]
 script = ExtResource("1_63ffp")
@@ -154,22 +157,22 @@ position = Vector2(439, -197)
 [node name="ProjectileBox15" parent="." instance=ExtResource("5_wtxik")]
 position = Vector2(468, -454)
 
-[node name="Spawner" type="Area2D" parent="."]
-collision_layer = 0
-collision_mask = 0
-script = ExtResource("12_7offl")
-spawn_limit = 5
+[node name="Spawner" parent="." node_paths=PackedStringArray("collision_shape") instance=ExtResource("11_wlqac")]
+collision_shape = NodePath("SpawnArea")
 
 [node name="SpawnArea" type="CollisionShape2D" parent="Spawner"]
 modulate = Color(1, 0, 0, 1)
 position = Vector2(28, -344)
-shape = SubResource("RectangleShape2D_3btb0")
-
-[node name="SpawnTimer" type="Timer" parent="Spawner"]
-wait_time = 3.0
+shape = SubResource("RectangleShape2D_3sgx4")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("13_gucee")
 autoplay = true
 
-[connection signal="timeout" from="Spawner/SpawnTimer" to="Spawner" method="_on_spawn_timer_timeout"]
+[node name="Spawner2" parent="." node_paths=PackedStringArray("collision_shape") instance=ExtResource("11_wlqac")]
+position = Vector2(168, -608)
+collision_shape = NodePath("SpawnArea")
+
+[node name="SpawnArea" type="CollisionShape2D" parent="Spawner2"]
+position = Vector2(140, -4)
+shape = SubResource("RectangleShape2D_de65n")

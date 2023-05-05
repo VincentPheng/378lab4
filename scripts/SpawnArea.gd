@@ -1,19 +1,22 @@
 extends Area2D
-
-@export var spawn_limit: int = 10
+class_name SpawnArea
 
 var zombie = preload("res://instances/zombie.tscn")
+
+@export var collision_shape: CollisionShape2D
 
 var rng = RandomNumberGenerator.new()
 var area_size: Vector2
 var top_left: Vector2
 var bottom_right: Vector2
 var can_spawn: bool = true
+var spawn_limit
 
 func _ready():
-	area_size = $SpawnArea.get_shape().get_rect().size
-	top_left = Vector2($SpawnArea.position.x - (area_size.x / 2), $SpawnArea.position.y - (area_size.y / 2))
-	bottom_right = Vector2($SpawnArea.position.x + (area_size.x / 2), $SpawnArea.position.y + (area_size.y / 2))
+	area_size = collision_shape.get_shape().get_rect().size
+	top_left = Vector2(collision_shape.position.x - (area_size.x / 2), collision_shape.position.y - (area_size.y / 2))
+	bottom_right = Vector2(collision_shape.position.x + (area_size.x / 2), collision_shape.position.y + (area_size.y / 2))
+	spawn_limit = get_tree().current_scene.max_zombies
 
 func _process(delta):
 	var zombie_count = len(get_tree().get_nodes_in_group("Zombie"))

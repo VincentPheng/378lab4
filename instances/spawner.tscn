@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://cavxsqlktuqa2"]
+
+[ext_resource type="Script" path="res://scripts/SpawnArea.gd" id="1_4371k"]
+
+[node name="Spawner" type="Area2D"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_4371k")
+
+[node name="SpawnTimer" type="Timer" parent="."]
+wait_time = 3.0
+
+[connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]
