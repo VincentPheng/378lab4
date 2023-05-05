@@ -1,0 +1,99 @@
+[gd_scene load_steps=10 format=3 uid="uid://b576yffocdqw2"]
+
+[ext_resource type="Script" path="res://scripts/zombie.gd" id="1_8qj23"]
+[ext_resource type="Texture2D" uid="uid://fudvjp052yg1" path="res://sprites/zombie1.png" id="1_21udh"]
+[ext_resource type="Theme" uid="uid://xp6h1nwsksj4" path="res://hud.tres" id="3_mdj76"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_17hhv"]
+size = Vector2(14, 15)
+
+[sub_resource type="Animation" id="Animation_ryupl"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-0.174533]
+}
+
+[sub_resource type="Animation" id="Animation_ue13j"]
+resource_name = "walk"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-0.174533, 0.174533]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_606am"]
+_data = {
+"RESET": SubResource("Animation_ryupl"),
+"walk": SubResource("Animation_ue13j")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t3774"]
+size = Vector2(14, 30.4667)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2g3ci"]
+size = Vector2(10, 15)
+
+[node name="Zombie" type="CharacterBody2D" groups=["Zombie"]]
+rotation = -0.174533
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_8qj23")
+health = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_21udh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 7.5)
+shape = SubResource("RectangleShape2D_17hhv")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Sprite2D")
+autoplay = "walk"
+libraries = {
+"": SubResource("AnimationLibrary_606am")
+}
+
+[node name="ProjectileDetector" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ProjectileDetector"]
+position = Vector2(-9.31323e-08, -0.233356)
+shape = SubResource("RectangleShape2D_t3774")
+
+[node name="PlayerDetector" type="Area2D" parent="."]
+collision_layer = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetector"]
+position = Vector2(0, 7.5)
+shape = SubResource("RectangleShape2D_2g3ci")
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+offset_left = -7.0
+offset_top = -18.0
+offset_right = 7.0
+offset_bottom = -16.0
+theme = ExtResource("3_mdj76")
+max_value = 10.0
+value = 10.0
+show_percentage = false
+
+[connection signal="body_entered" from="ProjectileDetector" to="." method="_on_projectile_detector_body_entered"]

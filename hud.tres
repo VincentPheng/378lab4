@@ -1,0 +1,22 @@
+[gd_resource type="Theme" load_steps=5 format=3 uid="uid://xp6h1nwsksj4"]
+
+[ext_resource type="FontFile" uid="uid://dpvogydobkxj0" path="res://sprites/Peaberry-Base.otf" id="1_bs74k"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4yv0r"]
+bg_color = Color(0.756863, 0.145098, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_17l0f"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fsqkr"]
+bg_color = Color(0.666667, 0, 0.243137, 1)
+
+[resource]
+default_font = ExtResource("1_bs74k")
+default_font_size = 32
+HSlider/styles/grabber_area_highlight = SubResource("StyleBoxFlat_4yv0r")
+ProgressBar/colors/font_color = Color(0.95, 0.95, 0.95, 1)
+ProgressBar/colors/font_outline_color = Color(1, 1, 1, 1)
+ProgressBar/colors/font_shadow_color = Color(0, 0, 0, 1)
+ProgressBar/constants/outline_size = 0
+ProgressBar/styles/background = SubResource("StyleBoxFlat_17l0f")
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_fsqkr")

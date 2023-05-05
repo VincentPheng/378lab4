@@ -1,8 +1,11 @@
-extends CharacterBody2D
+extends RigidBody2D
 class_name Projectile
 
-@export var SPEED = 500
+var inactive = false
 
-func _physics_process(delta):
-	move_and_collide(velocity.normalized() * delta * SPEED)
+func _on_body_entered(_body):
+	$AnimationPlayer.play("delete")
 
+func _on_animation_player_animation_finished(anim_name):
+	if anim_name == "delete":
+		queue_free()

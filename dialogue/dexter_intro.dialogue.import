@@ -1,0 +1,14 @@
+[remap]
+
+importer="dialogue_manager_compiler_8"
+type="Resource"
+uid="uid://bhlik7ev7t51w"
+path="res://.godot/imported/dexter_intro.dialogue-e9d949ff6eda11cb502919148c37a531.tres"
+
+[deps]
+
+source_file="res://dialogue/dexter_intro.dialogue"
+dest_files=["res://.godot/imported/dexter_intro.dialogue-e9d949ff6eda11cb502919148c37a531.tres"]
+
+[params]
+

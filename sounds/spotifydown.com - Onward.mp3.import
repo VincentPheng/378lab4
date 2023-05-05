@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://csy5d3535ydhl"
+path="res://.godot/imported/spotifydown.com - Onward.mp3-9c9a98f8917b67bf0802174d628d30a8.mp3str"
+
+[deps]
+
+source_file="res://sounds/spotifydown.com - Onward.mp3"
+dest_files=["res://.godot/imported/spotifydown.com - Onward.mp3-9c9a98f8917b67bf0802174d628d30a8.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

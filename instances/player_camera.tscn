@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://b27qrgnel6ou1"]
+
+[node name="PlayerCamera" type="Camera2D"]
+zoom = Vector2(4, 4)
+drag_horizontal_enabled = true
+drag_vertical_enabled = true

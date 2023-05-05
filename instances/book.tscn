@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://c0fc44e1v3rbr"]
+[gd_scene load_steps=9 format=3 uid="uid://c0fc44e1v3rbr"]
 
 [ext_resource type="Script" path="res://scripts/projectile.gd" id="1_6gpba"]
 [ext_resource type="Texture2D" uid="uid://d12ro65dnav0b" path="res://sprites/book1.png" id="1_h37ml"]
@@ -21,15 +21,64 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_syd86"]
 size = Vector2(12, 14)
 
-[node name="Book" type="CharacterBody2D"]
+[sub_resource type="Animation" id="Animation_nqyim"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_yrxsm"]
+resource_name = "delete"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7oofs"]
+_data = {
+"RESET": SubResource("Animation_nqyim"),
+"delete": SubResource("Animation_yrxsm")
+}
+
+[node name="Book" type="RigidBody2D"]
 collision_layer = 8
 collision_mask = 6
+mass = 0.01
+gravity_scale = 0.0
+max_contacts_reported = 1
+contact_monitor = true
 script = ExtResource("1_6gpba")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_xfc66")
 frame_progress = 0.618104
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="Hurtbox" type="CollisionShape2D" parent="."]
 position = Vector2(1, 0)
 shape = SubResource("RectangleShape2D_syd86")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../AnimatedSprite2D")
+libraries = {
+"": SubResource("AnimationLibrary_7oofs")
+}
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

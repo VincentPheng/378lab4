@@ -4,20 +4,45 @@ extends CharacterBody2D
 @onready var stapler_scn = preload("res://instances/stapler.tscn")
 
 @export var SPEED = 300.0
+@export var stats: Resource
 
 var projectiles = ["book", "stapler"]
 var rng = RandomNumberGenerator.new()
+var projectile_spawns
+
+var talking = false
+
+func _ready():
+	projectile_spawns = [
+		$ProjectileSpawnTop,
+		$ProjectileSpawnBot,
+		$ProjectileSpawnBotLeft,
+		$ProjectileSpawnBotRight,
+		$ProjectileSpawnLeft,
+		$ProjectileSpawnRight,
+		$ProjectileSpawnTopRight,
+		$ProjectileSpawnTopLeft]
+	DialogueManager.dialogue_ended.connect(_on_dialogue_ended)
+	
 
 func _physics_process(delta):
-	velocity.x = handle_movement(Input.get_axis("left", "right"), velocity.x)
-	velocity.y = handle_movement(Input.get_axis("up", "down"), velocity.y)
-
-	move_and_collide(velocity * delta)
-	$ProjectileSpawn.look_at(get_global_mouse_position())
+	if not talking:
+		velocity.x = handle_movement(Input.get_axis("left", "right"), velocity.x)
+		velocity.y = handle_movement(Input.get_axis("up", "down"), velocity.y)
+		should_flip_sprite(Input.get_axis("left", "right"))
+		play_walk_anim()
+		rotate_spawns()
+		move_and_collide(velocity * delta)
 
 func _input(event):
-	if event.is_action_pressed("throw"):
-		throw()
+	if not talking:
+		if event.is_action_pressed("throw"):
+			throw()
+		if event.is_action_pressed("talk"):
+			var actionables = $ActionableFinder.get_overlapping_areas()
+			if actionables.size() > 0:
+				actionables[0].action()
+				talking = true
 
 func instance_random_projectile():
 	var random_projectile = rng.randi_range(0, len(projectiles) - 1)
@@ -28,11 +53,39 @@ func instance_random_projectile():
 			return stapler_scn.instantiate()
 
 func throw():
-	var projectile_to_throw = instance_random_projectile()
-	get_tree().get_root().call_deferred("add_child", projectile_to_throw)
-	projectile_to_throw.position = $ProjectileSpawn/Marker2D.get_global_position()
-	projectile_to_throw.velocity = get_global_mouse_position() - projectile_to_throw.position
-	
+	get_closest_projectile_spawn()
+	if stats.projectiles_left > 0:
+		stats.projectiles_left -= 1
+		var projectile_to_throw = instance_random_projectile()
+		var projectile_spawn_point = get_closest_projectile_spawn()
+		projectile_to_throw.position = projectile_spawn_point.get_global_position()
+		projectile_to_throw.rotation_degrees = projectile_spawn_point.rotation_degrees
+		projectile_to_throw.rotation = rng.randf_range(-180, 180)
+		projectile_to_throw.apply_impulse(Vector2(500, 0).rotated(projectile_spawn_point.global_rotation))
+		get_tree().get_root().call_deferred("add_child", projectile_to_throw)
+
+func _on_dialogue_ended(resource: DialogueResource):
+	talking = false
+
+func rotate_spawns():
+	for spawn in projectile_spawns:
+		spawn.look_at(get_global_mouse_position())
+
+func get_closest_projectile_spawn():
+	var closest = projectile_spawns[0]
+	var closest_dist = projectile_spawns[0].global_position.distance_to(get_global_mouse_position())
+	for spawn in projectile_spawns:
+		var dist = spawn.global_position.distance_to(get_global_mouse_position())
+		if dist < closest_dist:
+			closest = spawn
+			closest_dist = dist
+	return closest
+
+func play_walk_anim():
+	if abs(velocity.x) > 0 or abs(velocity.y) > 0:
+		$PlayerAnimation.play("walking")
+	else:
+		$PlayerAnimation.stop()
 
 func handle_movement(direction, curr_velocity):
 	var new_velocity
@@ -41,3 +94,9 @@ func handle_movement(direction, curr_velocity):
 	else:
 		new_velocity = move_toward(curr_velocity, 0, SPEED)
 	return new_velocity
+
+func should_flip_sprite(direction):
+	if direction > 0 and $PlayerAnimation.flip_h:
+		$PlayerAnimation.flip_h = false
+	elif direction < 0 and not $PlayerAnimation.flip_h:
+		$PlayerAnimation.flip_h = true
