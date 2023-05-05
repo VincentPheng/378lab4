@@ -1,11 +1,10 @@
-[gd_scene load_steps=21 format=3 uid="uid://pfd7m6oxf50v"]
+[gd_scene load_steps=20 format=3 uid="uid://pfd7m6oxf50v"]
 
 [ext_resource type="Script" path="res://scripts/level.gd" id="1_63ffp"]
 [ext_resource type="PackedScene" uid="uid://bhc1flkqys1ud" path="res://instances/player.tscn" id="1_kacfe"]
 [ext_resource type="Texture2D" uid="uid://biihtmgl7ke71" path="res://sprites/placeholder_tile.png" id="2_l07d4"]
 [ext_resource type="PackedScene" uid="uid://dld23s7sdxl3a" path="res://instances/hud.tscn" id="2_r4dvs"]
 [ext_resource type="PackedScene" uid="uid://d2ov41m8wcdo5" path="res://instances/projectile_box.tscn" id="5_wtxik"]
-[ext_resource type="PackedScene" uid="uid://b576yffocdqw2" path="res://instances/zombie.tscn" id="6_yac8y"]
 [ext_resource type="PackedScene" uid="uid://b27qrgnel6ou1" path="res://instances/player_camera.tscn" id="7_oqa12"]
 [ext_resource type="Texture2D" uid="uid://43f7vdbj20ev" path="res://sprites/dexter.png" id="9_cbwph"]
 [ext_resource type="PackedScene" uid="uid://r37qtrug375j" path="res://instances/actionable.tscn" id="9_qkufh"]
@@ -87,9 +86,6 @@ remote_path = NodePath("../../PlayerCamera")
 
 [node name="PlayerCamera" parent="." instance=ExtResource("7_oqa12")]
 drag_vertical_enabled = false
-
-[node name="Zombie" parent="." instance=ExtResource("6_yac8y")]
-position = Vector2(74, -13)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(-355, -20)

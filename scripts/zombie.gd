@@ -6,6 +6,7 @@ extends CharacterBody2D
 
 var player
 var blood = preload("res://instances/blood_splatter.tscn")
+
 func _ready():
 	$HealthBar.max_value = health
 	$HealthBar.value = health
@@ -30,7 +31,7 @@ func _on_projectile_detector_body_entered(body):
 		var blood_instance = blood.instantiate()
 		get_tree().current_scene.add_child(blood_instance)
 		blood_instance.global_position = global_position
-		blood_instance.rotation = global_position.angle_to_point(body.global_position) * -1
+		blood_instance.rotation = global_position.angle_to_point(player.global_position) + 180
 		if health <= 0:
 			queue_free()
 		$HealthBar.value = health
