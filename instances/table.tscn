@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://ce6r382q5lt5l"]
+
+[ext_resource type="Texture2D" uid="uid://4ynq0glyt770" path="res://sprites/table.png" id="1_r0u8o"]
+[ext_resource type="PackedScene" uid="uid://r37qtrug375j" path="res://instances/actionable.tscn" id="2_7m4u3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y5fof"]
+size = Vector2(16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mnfb1"]
+size = Vector2(36, 36)
+
+[node name="Table" type="RigidBody2D" groups=["MoveableEnvironment"]]
+collision_layer = 72
+collision_mask = 71
+mass = 10.0
+inertia = 20.0
+gravity_scale = 0.0
+linear_damp = 5.0
+angular_damp = 5.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_r0u8o")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_y5fof")
+
+[node name="Actionable" parent="." instance=ExtResource("2_7m4u3")]
+type = 1
+interactable = "table"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Actionable"]
+shape = SubResource("RectangleShape2D_mnfb1")

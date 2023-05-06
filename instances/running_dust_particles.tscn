@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://vn7niixwmx6k"]
+
+[node name="RunningDustParticles" type="CPUParticles2D"]
+z_index = 10
+rotation = -0.000811695
+emitting = false
+amount = 10
+lifetime = 0.2
+one_shot = true
+speed_scale = 2.0
+explosiveness = 1.0
+emission_shape = 1
+emission_sphere_radius = 0.01
+spread = 25.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 50.0
+initial_velocity_max = 50.0
+scale_amount_min = 0.25
+scale_amount_max = 1.5

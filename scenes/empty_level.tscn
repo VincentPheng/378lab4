@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://c6my2efybvigw"]
+
+[ext_resource type="PackedScene" uid="uid://bhc1flkqys1ud" path="res://instances/player.tscn" id="1_mdj2j"]
+[ext_resource type="PackedScene" uid="uid://dld23s7sdxl3a" path="res://instances/hud.tscn" id="2_gc5v0"]
+[ext_resource type="PackedScene" uid="uid://b27qrgnel6ou1" path="res://instances/player_camera.tscn" id="3_gaqlr"]
+
+[node name="EmptyLevel" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("1_mdj2j")]
+z_index = 99
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Player"]
+remote_path = NodePath("../../PlayerCamera")
+
+[node name="HUD" parent="." instance=ExtResource("2_gc5v0")]
+
+[node name="PlayerCamera" parent="." instance=ExtResource("3_gaqlr")]
+drag_vertical_enabled = false

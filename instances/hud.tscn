@@ -1,20 +1,24 @@
-[gd_scene load_steps=7 format=3 uid="uid://dld23s7sdxl3a"]
+[gd_scene load_steps=11 format=3 uid="uid://dld23s7sdxl3a"]
 
 [ext_resource type="Script" path="res://scripts/hud.gd" id="1_6xcc1"]
 [ext_resource type="Texture2D" uid="uid://bug2uci048bta" path="res://sprites/cursor.png" id="2_aps4n"]
 [ext_resource type="Resource" uid="uid://dkanpf5k76w42" path="res://scripts/player_data.tres" id="2_en2fd"]
-[ext_resource type="Texture2D" uid="uid://caltdk7hagtcj" path="res://sprites/box.png" id="4_ha6un"]
 [ext_resource type="Theme" uid="uid://xp6h1nwsksj4" path="res://hud.tres" id="4_pqm74"]
+[ext_resource type="Shader" path="res://scenes/test_level.gdshader" id="6_7yut1"]
+[ext_resource type="Texture2D" uid="uid://bg0hyj460m7uc" path="res://sprites/stapler2.png" id="6_y8ybp"]
+[ext_resource type="Texture2D" uid="uid://b3lmb5grcveq2" path="res://sprites/pencils1.png" id="7_sv8kj"]
+[ext_resource type="Texture2D" uid="uid://d12ro65dnav0b" path="res://sprites/book1.png" id="8_njk7t"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_woaqd"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_305fe"]
+shader = ExtResource("6_7yut1")
+shader_parameter/scanline_count = 1000.0
 
 [node name="HUD" type="CanvasLayer"]
 process_mode = 3
 script = ExtResource("1_6xcc1")
 stats = ExtResource("2_en2fd")
-
-[node name="Crosshair" type="Sprite2D" parent="."]
-texture = ExtResource("2_aps4n")
 
 [node name="BoxCount" type="Label" parent="."]
 offset_left = 1088.0
@@ -25,10 +29,20 @@ theme = ExtResource("4_pqm74")
 theme_override_font_sizes/font_size = 64
 text = "000"
 
-[node name="Box" type="Sprite2D" parent="."]
-position = Vector2(1240, 680)
+[node name="Stapler2" type="Sprite2D" parent="."]
+position = Vector2(1226, 665)
 scale = Vector2(2, 2)
-texture = ExtResource("4_ha6un")
+texture = ExtResource("6_y8ybp")
+
+[node name="Pencils1" type="Sprite2D" parent="."]
+position = Vector2(1228, 692)
+scale = Vector2(2, 2)
+texture = ExtResource("7_sv8kj")
+
+[node name="Book1" type="Sprite2D" parent="."]
+position = Vector2(1254, 682)
+scale = Vector2(2, 2)
+texture = ExtResource("8_njk7t")
 
 [node name="PauseScreen" type="Node2D" parent="."]
 visible = false
@@ -59,11 +73,47 @@ text = "Audio"
 
 [node name="PausedLabel" type="Label" parent="PauseScreen"]
 offset_left = 544.0
-offset_top = 256.0
+offset_top = 192.0
 offset_right = 776.0
-offset_bottom = 323.0
+offset_bottom = 259.0
 theme = ExtResource("4_pqm74")
 theme_override_font_sizes/font_size = 64
 text = "Paused"
 
+[node name="CRTFilterOptionLabel" type="Label" parent="PauseScreen"]
+offset_left = 224.0
+offset_top = 352.0
+offset_right = 402.0
+offset_bottom = 387.0
+theme = ExtResource("4_pqm74")
+text = "CRT Filter"
+
+[node name="CRTFilterOption" type="CheckBox" parent="PauseScreen/CRTFilterOptionLabel"]
+layout_mode = 0
+offset_left = 186.0
+offset_top = 3.0
+offset_right = 210.0
+offset_bottom = 27.0
+theme = ExtResource("4_pqm74")
+button_pressed = true
+
+[node name="CRTFilter" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+
+[node name="ColorRect" type="ColorRect" parent="CRTFilter"]
+material = SubResource("ShaderMaterial_305fe")
+layout_mode = 0
+offset_right = 1288.0
+offset_bottom = 728.0
+mouse_filter = 2
+
+[node name="Crosshair" type="Sprite2D" parent="."]
+texture = ExtResource("2_aps4n")
+
 [connection signal="drag_ended" from="PauseScreen/AudioSlider" to="." method="_on_audio_slider_drag_ended"]
+[connection signal="pressed" from="PauseScreen/CRTFilterOptionLabel/CRTFilterOption" to="." method="_on_crt_filter_option_pressed"]

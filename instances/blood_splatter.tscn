@@ -45,7 +45,6 @@ z_index = -5
 amount = 32
 lifetime = 0.2
 explosiveness = 1.0
-fixed_fps = 30
 draw_order = 1
 texture = ExtResource("1_ep2xe")
 emission_shape = 1

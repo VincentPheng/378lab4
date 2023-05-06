@@ -1,11 +1,16 @@
-[gd_scene load_steps=16 format=3 uid="uid://bhc1flkqys1ud"]
+[gd_scene load_steps=21 format=3 uid="uid://bhc1flkqys1ud"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_wxukp"]
 [ext_resource type="Resource" uid="uid://dkanpf5k76w42" path="res://scripts/player_data.tres" id="3_ydqhr"]
 [ext_resource type="Texture2D" uid="uid://dqvurj4wsjjdk" path="res://sprites/tom1.png" id="3_ywf58"]
 [ext_resource type="Texture2D" uid="uid://dqk31klx8al7i" path="res://sprites/tom2.png" id="4_6i34q"]
+[ext_resource type="Texture2D" uid="uid://biouadbw81ql2" path="res://sprites/tom_holding1.png" id="4_872oj"]
 [ext_resource type="Texture2D" uid="uid://cfmctq1b3ur75" path="res://sprites/tom3.png" id="5_btoup"]
+[ext_resource type="Texture2D" uid="uid://dbsr5xrjhivk3" path="res://sprites/tom_holding2.png" id="5_j7w6y"]
+[ext_resource type="Texture2D" uid="uid://bvmhsul7ije0i" path="res://sprites/tom_holding3.png" id="6_6gfnd"]
 [ext_resource type="Theme" uid="uid://xp6h1nwsksj4" path="res://hud.tres" id="6_wj6ls"]
+[ext_resource type="Texture2D" uid="uid://4ynq0glyt770" path="res://sprites/table.png" id="10_d08xl"]
+[ext_resource type="AudioStream" uid="uid://cfjkap7pl12rh" path="res://sounds/throw.mp3" id="11_3ice5"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_m0ems"]
 animations = [{
@@ -16,6 +21,20 @@ animations = [{
 "loop": true,
 "name": &"default",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_872oj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_j7w6y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_6gfnd")
+}],
+"loop": true,
+"name": &"holding_walking",
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -33,7 +52,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gddsf"]
-size = Vector2(14, 6)
+size = Vector2(9, 6)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pt5mv"]
 
@@ -79,13 +98,13 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_e1rfl"]
-size = Vector2(14, 15)
+size = Vector2(14, 30)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_68k7f"]
 size = Vector2(14, 30)
 
 [node name="Player" type="CharacterBody2D"]
-collision_mask = 2
+collision_mask = 66
 script = ExtResource("1_wxukp")
 SPEED = 100.0
 stats = ExtResource("3_ydqhr")
@@ -93,11 +112,10 @@ stats = ExtResource("3_ydqhr")
 [node name="PlayerAnimation" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_m0ems")
 animation = &"walking"
-frame = 2
-frame_progress = 0.863268
+autoplay = "walking"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 12)
+position = Vector2(0.5, 12)
 shape = SubResource("RectangleShape2D_gddsf")
 
 [node name="HealthBar" type="ProgressBar" parent="."]
@@ -131,22 +149,21 @@ position = Vector2(7, -10)
 position = Vector2(-7, -10)
 
 [node name="ProjectileSpawnBotRight" type="Node2D" parent="."]
-position = Vector2(7, 10)
+position = Vector2(7, 15)
 
 [node name="ProjectileSpawnBotLeft" type="Node2D" parent="."]
-position = Vector2(-7, 10)
+position = Vector2(-7, 15)
 
 [node name="ProjectileSpawnLeft" type="Node2D" parent="."]
 position = Vector2(-7, 0)
 
 [node name="ProjectileSpawnBot" type="Node2D" parent="."]
-position = Vector2(0, 10)
+position = Vector2(0, 15)
 
 [node name="ActionableFinder" type="Area2D" parent="."]
 collision_mask = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ActionableFinder"]
-position = Vector2(0, 7.5)
 shape = SubResource("RectangleShape2D_e1rfl")
 
 [node name="PickupDetector" type="Area2D" parent="."]
@@ -155,3 +172,12 @@ collision_mask = 32
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PickupDetector"]
 shape = SubResource("RectangleShape2D_68k7f")
+
+[node name="HoldingSprite" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(0, -24)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("10_d08xl")
+
+[node name="ThrowSoundEffect" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_3ice5")

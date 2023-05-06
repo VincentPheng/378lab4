@@ -1,8 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://b576yffocdqw2"]
+[gd_scene load_steps=13 format=3 uid="uid://b576yffocdqw2"]
 
 [ext_resource type="Script" path="res://scripts/zombie.gd" id="1_8qj23"]
 [ext_resource type="Texture2D" uid="uid://fudvjp052yg1" path="res://sprites/zombie1.png" id="1_21udh"]
 [ext_resource type="Theme" uid="uid://xp6h1nwsksj4" path="res://hud.tres" id="3_mdj76"]
+[ext_resource type="AudioStream" uid="uid://or01olst6fju" path="res://sounds/zombie_hit_1.mp3" id="4_xg75g"]
+[ext_resource type="AudioStream" uid="uid://b5d7ftuh5ymm" path="res://sounds/zombie_hit_2.mp3" id="5_nc4ef"]
+[ext_resource type="AudioStream" uid="uid://dcbphv631hp3w" path="res://sounds/zombie_hit_3.mp3" id="6_gqomb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_17hhv"]
 size = Vector2(14, 15)
@@ -51,9 +54,10 @@ size = Vector2(14, 30.4667)
 size = Vector2(10, 15)
 
 [node name="Zombie" type="CharacterBody2D" groups=["Zombie"]]
+z_index = 10
 rotation = -0.174533
 collision_layer = 4
-collision_mask = 2
+collision_mask = 70
 script = ExtResource("1_8qj23")
 health = 3
 
@@ -96,4 +100,16 @@ max_value = 10.0
 value = 10.0
 show_percentage = false
 
+[node name="HitSound1" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_xg75g")
+
+[node name="HitSound2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_nc4ef")
+
+[node name="HitSound3" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_gqomb")
+
 [connection signal="body_entered" from="ProjectileDetector" to="." method="_on_projectile_detector_body_entered"]
+[connection signal="finished" from="HitSound1" to="." method="_on_hit_sound_finished"]
+[connection signal="finished" from="HitSound2" to="." method="_on_hit_sound_finished"]
+[connection signal="finished" from="HitSound3" to="." method="_on_hit_sound_finished"]

@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://d2ov41m8wcdo5"]
+[gd_scene load_steps=9 format=3 uid="uid://d2ov41m8wcdo5"]
 
 [ext_resource type="Script" path="res://scripts/projectile_box.gd" id="1_4glwf"]
 [ext_resource type="Texture2D" uid="uid://caltdk7hagtcj" path="res://sprites/box.png" id="1_w13tt"]
 [ext_resource type="Resource" uid="uid://dkanpf5k76w42" path="res://scripts/player_data.tres" id="2_j3mfn"]
+[ext_resource type="AudioStream" uid="uid://c6mr27wg0ttex" path="res://sounds/box_pickup.mp3" id="4_eb4jc"]
 
 [sub_resource type="Animation" id="Animation_7domo"]
 length = 0.001
@@ -69,4 +70,8 @@ collision_mask = 32
 position = Vector2(0, 0.75)
 shape = SubResource("RectangleShape2D_urprs")
 
+[node name="PickupSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_eb4jc")
+
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="finished" from="PickupSound" to="." method="_on_pickup_sound_finished"]

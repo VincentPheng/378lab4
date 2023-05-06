@@ -1,8 +1,6 @@
 extends RigidBody2D
 class_name Projectile
 
-var inactive = false
-
 func _on_body_entered(_body):
 	$AnimationPlayer.play("delete")
 
