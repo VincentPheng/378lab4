@@ -4,16 +4,21 @@ extends CharacterBody2D
 @onready var stapler_scn = preload("res://instances/stapler.tscn")
 @onready var table_scn = preload("res://instances/table.tscn")
 @onready var table_sprite = preload("res://sprites/table.png")
+@onready var lightning_scn = preload("res://instances/lightning_effect.tscn")
 
-@export var SPEED = 300.0
-@export var stats: Resource
+@export var SPEED := 300.0
+@export var baseHealth := 100
+@export var baseStamina := 100
+@export var sprintSpeedMultiplier := 1.5
 
 var projectiles = ["book", "stapler"]
 var rng = RandomNumberGenerator.new()
 var projectile_spawns
 var holding := ""
-
-var talking = false
+var currSpeedMultipler := 1.0
+var currStamina := baseStamina
+var currHealth := baseHealth
+var talking := false
 
 func _ready():
 	projectile_spawns = [
@@ -30,6 +35,9 @@ func _ready():
 
 func _physics_process(delta):
 	if not talking:
+		if currStamina <= 0:
+			currSpeedMultipler = 1
+		regen_stamina()
 		velocity.x = handle_movement(Input.get_axis("left", "right"), velocity.x)
 		velocity.y = handle_movement(Input.get_axis("up", "down"), velocity.y)
 		should_flip_sprite(Input.get_axis("left", "right"))
@@ -54,6 +62,10 @@ func _input(event):
 					$PlayerAnimation.play("holding_walking")
 					$PlayerAnimation.stop()
 					holding = actionable_type[1]
+		if event.is_action_pressed("sprint") and currStamina > 0:
+			currSpeedMultipler = sprintSpeedMultiplier
+		if event.is_action_released("sprint"):
+			currSpeedMultipler = 1
 
 func push_object(collision):
 	if collision and collision.get_collider().is_in_group("MoveableEnvironment"):
@@ -67,6 +79,11 @@ func instance_random_projectile():
 			return book_scn.instantiate()
 		"stapler":
 			return stapler_scn.instantiate()
+
+func regen_stamina():
+	if currStamina < 100:
+		currStamina += 1
+		$StaminaBar.value = currStamina
 
 func throw():
 	var projectile_to_throw
@@ -83,8 +100,8 @@ func throw():
 		$PlayerAnimation.stop()
 		holding = ""
 		$ThrowSoundEffect.play()
-	elif stats.projectiles_left > 0:
-		stats.projectiles_left -= 1
+	elif PlayerData.projectiles_left > 0:
+		PlayerData.projectiles_left -= 1
 		projectile_to_throw = instance_random_projectile()
 		projectile_spawn_point = get_closest_projectile_spawn()
 		projectile_to_throw.position = projectile_spawn_point.get_global_position()
@@ -96,6 +113,11 @@ func throw():
 
 func _on_dialogue_ended(resource: DialogueResource):
 	talking = false
+	var title = resource.get_titles()[0]
+	if title == "dexter_intro":
+		$LightningTimer.start()
+		PlayerData.dexter_party = true
+		get_tree().current_scene.get_node("Dexter").queue_free()
 
 func rotate_spawns():
 	for spawn in projectile_spawns:
@@ -113,14 +135,20 @@ func get_closest_projectile_spawn():
 
 func play_walk_anim():
 	if abs(velocity.x) > 0 or abs(velocity.y) > 0:
-		$PlayerAnimation.play("walking" if holding == "" else "holding_walking")
+		if currSpeedMultipler > 1:
+			$PlayerAnimation.play("sprinting" if holding == "" else "holding_sprinting")
+		else:
+			$PlayerAnimation.play("walking" if holding == "" else "holding_walking")
 	else:
 		$PlayerAnimation.stop()
 
 func handle_movement(direction, curr_velocity):
 	var new_velocity
 	if direction:
-		new_velocity = direction * (SPEED / (1 if holding == "" else 2))
+		if currSpeedMultipler > 1:
+			currStamina -= 2
+			$StaminaBar.value = currStamina
+		new_velocity = direction * (SPEED / (1 if holding == "" else 2)) * currSpeedMultipler
 	else:
 		new_velocity = move_toward(curr_velocity, 0, SPEED)
 	return new_velocity
@@ -130,3 +158,21 @@ func should_flip_sprite(direction):
 		$PlayerAnimation.flip_h = false
 	elif direction < 0 and not $PlayerAnimation.flip_h:
 		$PlayerAnimation.flip_h = true
+
+
+func _on_lightning_timer_timeout():
+	var zombies: Array[Node2D] = $LightningArea.get_overlapping_bodies()
+	if len(zombies) > 0:
+		var closest_zombie = zombies[0]
+		var closest_dist = zombies[0].global_position.distance_to(global_position)
+		var dist
+		for zombie in zombies:
+			dist = zombie.global_position.distance_to(global_position)
+			if dist < closest_dist:
+				closest_zombie = zombie
+				closest_dist = dist
+		var lightning: Line2D = lightning_scn.instantiate()
+		lightning.add_point(global_position)
+		lightning.add_point(closest_zombie.global_position)
+		get_tree().get_root().call_deferred("add_child", lightning)
+		closest_zombie.take_damage()

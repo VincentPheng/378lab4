@@ -1,8 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://dld23s7sdxl3a"]
+[gd_scene load_steps=10 format=3 uid="uid://dld23s7sdxl3a"]
 
 [ext_resource type="Script" path="res://scripts/hud.gd" id="1_6xcc1"]
 [ext_resource type="Texture2D" uid="uid://bug2uci048bta" path="res://sprites/cursor.png" id="2_aps4n"]
-[ext_resource type="Resource" uid="uid://dkanpf5k76w42" path="res://scripts/player_data.tres" id="2_en2fd"]
 [ext_resource type="Theme" uid="uid://xp6h1nwsksj4" path="res://hud.tres" id="4_pqm74"]
 [ext_resource type="Shader" path="res://scenes/test_level.gdshader" id="6_7yut1"]
 [ext_resource type="Texture2D" uid="uid://bg0hyj460m7uc" path="res://sprites/stapler2.png" id="6_y8ybp"]
@@ -18,7 +17,6 @@ shader_parameter/scanline_count = 1000.0
 [node name="HUD" type="CanvasLayer"]
 process_mode = 3
 script = ExtResource("1_6xcc1")
-stats = ExtResource("2_en2fd")
 
 [node name="BoxCount" type="Label" parent="."]
 offset_left = 1088.0
@@ -61,7 +59,7 @@ offset_bottom = 424.0
 theme = ExtResource("4_pqm74")
 min_value = -50.0
 max_value = 0.0
-value = -25.0
+value = -15.0
 
 [node name="AudioLabel" type="Label" parent="PauseScreen"]
 offset_left = 304.0

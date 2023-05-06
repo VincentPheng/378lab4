@@ -131,25 +131,26 @@ remote_path = NodePath("../../PlayerCamera")
 [node name="PlayerCamera" parent="." instance=ExtResource("7_oqa12")]
 drag_vertical_enabled = false
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Dexter" type="Sprite2D" parent="."]
 position = Vector2(-355, -20)
 texture = ExtResource("9_cbwph")
 
-[node name="Actionable" parent="Sprite2D" instance=ExtResource("9_qkufh")]
+[node name="Actionable" parent="Dexter" instance=ExtResource("9_qkufh")]
 dialogue_resource = ExtResource("10_hhgvp")
+dialogue_start = "dexter_intro"
 interactable = "dialogue"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/Actionable"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Dexter/Actionable"]
 position = Vector2(3.5, 2.5)
 shape = SubResource("RectangleShape2D_w1qce")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Dexter"]
 autoplay = "speech"
 libraries = {
 "": SubResource("AnimationLibrary_7xdma")
 }
 
-[node name="SpeechBubble" type="Sprite2D" parent="Sprite2D"]
+[node name="SpeechBubble" type="Sprite2D" parent="Dexter"]
 position = Vector2(1, -20)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("11_v2ye5")
@@ -201,7 +202,6 @@ position = Vector2(424, -320)
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("13_gucee")
-volume_db = -5.0
 autoplay = true
 
 [node name="Spawner" parent="." node_paths=PackedStringArray("collision_shape") instance=ExtResource("11_wlqac")]

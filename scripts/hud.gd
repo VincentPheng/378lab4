@@ -1,10 +1,8 @@
 extends CanvasLayer
 
-@export var stats: Resource
-
 func _ready():
 	$CRTFilter.visible = true
-	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), -25)
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), -15)
 
 func _input(event):
 	if event is InputEventMouseMotion:
@@ -14,7 +12,7 @@ func _input(event):
 		get_tree().paused = not get_tree().paused 
 
 func _process(delta):
-	$BoxCount.text = "%03d" % stats.projectiles_left
+	$BoxCount.text = "%03d" % PlayerData.projectiles_left
 
 
 func _on_audio_slider_drag_ended(value_changed):

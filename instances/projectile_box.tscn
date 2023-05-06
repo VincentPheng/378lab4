@@ -1,8 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://d2ov41m8wcdo5"]
+[gd_scene load_steps=8 format=3 uid="uid://d2ov41m8wcdo5"]
 
 [ext_resource type="Script" path="res://scripts/projectile_box.gd" id="1_4glwf"]
 [ext_resource type="Texture2D" uid="uid://caltdk7hagtcj" path="res://sprites/box.png" id="1_w13tt"]
-[ext_resource type="Resource" uid="uid://dkanpf5k76w42" path="res://scripts/player_data.tres" id="2_j3mfn"]
 [ext_resource type="AudioStream" uid="uid://c6mr27wg0ttex" path="res://sounds/box_pickup.mp3" id="4_eb4jc"]
 
 [sub_resource type="Animation" id="Animation_7domo"]
@@ -48,7 +47,6 @@ size = Vector2(10, 9.5)
 
 [node name="ProjectileBox" type="Node2D"]
 script = ExtResource("1_4glwf")
-stats = ExtResource("2_j3mfn")
 projectiles_per_box_lower = 5
 projectiles_per_box_upper = 10
 

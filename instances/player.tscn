@@ -1,7 +1,6 @@
-[gd_scene load_steps=21 format=3 uid="uid://bhc1flkqys1ud"]
+[gd_scene load_steps=23 format=3 uid="uid://bhc1flkqys1ud"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_wxukp"]
-[ext_resource type="Resource" uid="uid://dkanpf5k76w42" path="res://scripts/player_data.tres" id="3_ydqhr"]
 [ext_resource type="Texture2D" uid="uid://dqvurj4wsjjdk" path="res://sprites/tom1.png" id="3_ywf58"]
 [ext_resource type="Texture2D" uid="uid://dqk31klx8al7i" path="res://sprites/tom2.png" id="4_6i34q"]
 [ext_resource type="Texture2D" uid="uid://biouadbw81ql2" path="res://sprites/tom_holding1.png" id="4_872oj"]
@@ -33,8 +32,36 @@ animations = [{
 "texture": ExtResource("6_6gfnd")
 }],
 "loop": true,
+"name": &"holding_sprinting",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_872oj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_j7w6y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_6gfnd")
+}],
+"loop": true,
 "name": &"holding_walking",
-"speed": 10.0
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_ywf58")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_6i34q")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_btoup")
+}],
+"loop": true,
+"name": &"sprinting",
+"speed": 24.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -48,11 +75,16 @@ animations = [{
 }],
 "loop": true,
 "name": &"walking",
-"speed": 15.0
+"speed": 16.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gddsf"]
 size = Vector2(9, 6)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sgulk"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wj5hi"]
+bg_color = Color(0.160784, 0.376471, 0.984314, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pt5mv"]
 
@@ -103,20 +135,33 @@ size = Vector2(14, 30)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_68k7f"]
 size = Vector2(14, 30)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_3dse0"]
+radius = 122.016
+
 [node name="Player" type="CharacterBody2D"]
 collision_mask = 66
 script = ExtResource("1_wxukp")
 SPEED = 100.0
-stats = ExtResource("3_ydqhr")
 
 [node name="PlayerAnimation" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_m0ems")
-animation = &"walking"
+animation = &"holding_walking"
 autoplay = "walking"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0.5, 12)
 shape = SubResource("RectangleShape2D_gddsf")
+
+[node name="StaminaBar" type="ProgressBar" parent="."]
+offset_left = -7.0
+offset_top = 16.0
+offset_right = 7.0
+offset_bottom = 18.0
+theme = ExtResource("6_wj6ls")
+theme_override_styles/background = SubResource("StyleBoxFlat_sgulk")
+theme_override_styles/fill = SubResource("StyleBoxFlat_wj5hi")
+value = 100.0
+show_percentage = false
 
 [node name="HealthBar" type="ProgressBar" parent="."]
 offset_left = -7.0
@@ -161,12 +206,14 @@ position = Vector2(-7, 0)
 position = Vector2(0, 15)
 
 [node name="ActionableFinder" type="Area2D" parent="."]
+visible = false
 collision_mask = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ActionableFinder"]
 shape = SubResource("RectangleShape2D_e1rfl")
 
 [node name="PickupDetector" type="Area2D" parent="."]
+visible = false
 collision_layer = 32
 collision_mask = 32
 
@@ -181,3 +228,14 @@ texture = ExtResource("10_d08xl")
 
 [node name="ThrowSoundEffect" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("11_3ice5")
+
+[node name="LightningTimer" type="Timer" parent="."]
+wait_time = 3.0
+
+[node name="LightningArea" type="Area2D" parent="."]
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LightningArea"]
+shape = SubResource("CircleShape2D_3dse0")
+
+[connection signal="timeout" from="LightningTimer" to="." method="_on_lightning_timer_timeout"]
