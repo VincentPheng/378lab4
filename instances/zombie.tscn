@@ -56,6 +56,7 @@ size = Vector2(14, 30.4667)
 size = Vector2(10, 15)
 
 [node name="Zombie" type="CharacterBody2D" groups=["Zombie"]]
+z_index = 1
 rotation = -0.174533
 collision_layer = 4
 collision_mask = 70

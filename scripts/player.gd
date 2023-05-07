@@ -1,4 +1,5 @@
 extends CharacterBody2D
+class_name Player
 
 @onready var book_scn = preload("res://instances/book.tscn")
 @onready var stapler_scn = preload("res://instances/stapler.tscn")

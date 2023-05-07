@@ -3,14 +3,15 @@ shader_type canvas_item;
 
 uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
 uniform float scanline_count : hint_range(0, 1800) = 50.0;
+uniform float warp : hint_range(0, 10.0) = 4.5;
 
 vec2 uv_curve(vec2 uv)
 {
 	uv = (uv - 0.5) * 2.0;
 	
 	//You can modify the numbers and try different values
-	uv.x *= 1.0 + pow(abs(uv.y) / 4.5, 2.0);
-	uv.y *= 1.0 + pow(abs(uv.x) / 4.5, 2.0);
+	uv.x *= 1.0 + pow(abs(uv.y) / warp, 2.0);
+	uv.y *= 1.0 + pow(abs(uv.x) / warp, 2.0);
 	
 	//The scale part (you can delete it when you want)
 	uv /= 1.0;

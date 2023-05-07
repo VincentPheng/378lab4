@@ -20,7 +20,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_icrvx"]
 resource_name = "fade"
-length = 10.0
+length = 30.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -28,7 +28,7 @@ tracks/0/path = NodePath(".:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 9, 10),
+"times": PackedFloat32Array(0, 29, 30),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
@@ -42,7 +42,7 @@ _data = {
 
 [node name="BloodSplatter" type="CPUParticles2D"]
 z_index = -5
-amount = 32
+amount = 30
 lifetime = 0.2
 explosiveness = 1.0
 draw_order = 1
@@ -54,7 +54,7 @@ gravity = Vector2(0, 0)
 initial_velocity_min = 290.0
 initial_velocity_max = 290.0
 scale_amount_min = 0.1
-scale_amount_max = 0.3
+scale_amount_max = 0.4
 color = Color(0.835294, 0.0627451, 0, 1)
 script = ExtResource("2_74tf3")
 
