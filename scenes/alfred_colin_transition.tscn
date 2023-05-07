@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://cyeleuf6q63wt"]
+
+[ext_resource type="PackedScene" uid="uid://cmeq2b77vxcas" path="res://instances/upgrade_screen.tscn" id="1_wls2f"]
+[ext_resource type="AudioStream" uid="uid://ugw22nwh3our" path="res://sounds/spotifydown.com - Calm Before the Storm.mp3" id="2_rvkv1"]
+
+[node name="AlfredColinTransition" type="Node2D"]
+
+[node name="UpgradeScreen" parent="." instance=ExtResource("1_wls2f")]
+next_scene = "res://scenes/colin_hall.tscn"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_rvkv1")
+volume_db = -5.0
+autoplay = true

@@ -12,16 +12,23 @@ class_name Player
 @export var baseStamina := 100
 @export var sprintSpeedMultiplier := 1.5
 
-var projectiles = ["book", "stapler"]
+@onready var player_camera: PlayerCamera = get_tree().current_scene.get_node("PlayerCamera")
+
+var projectiles
+var hud: HUD
 var rng = RandomNumberGenerator.new()
 var projectile_spawns
 var holding := ""
+var level: Level
 var currSpeedMultipler := 1.0
+var invincible := false
 var currStamina := baseStamina
 var currHealth := baseHealth
 var talking := false
+var curr_objective
 
 func _ready():
+	projectiles = [book_scn, stapler_scn]
 	projectile_spawns = [
 		$ProjectileSpawnTop,
 		$ProjectileSpawnBot,
@@ -32,6 +39,9 @@ func _ready():
 		$ProjectileSpawnTopRight,
 		$ProjectileSpawnTopLeft]
 	DialogueManager.dialogue_ended.connect(_on_dialogue_ended)
+	hud = get_tree().current_scene.get_node("HUD")
+	level = get_tree().current_scene
+	curr_objective = level.objectives[-1]
 	
 
 func _physics_process(delta):
@@ -68,18 +78,26 @@ func _input(event):
 		if event.is_action_released("sprint"):
 			currSpeedMultipler = 1
 
+func take_damage(damage: int):
+	currHealth -= damage
+	$HealthBar.value = currHealth
+	if currHealth <= 0:
+		hud.dead()
+	else:
+		player_camera.shake()
+		hud.hit()
+		invincible = true
+		$HurtSound.play()
+		$AnimationPlayer.play("take_damage")
+		$InvincibilityTimer.start()
+
 func push_object(collision):
 	if collision and collision.get_collider().is_in_group("MoveableEnvironment"):
 		var collider = collision.get_collider()
 		collision.get_collider().apply_impulse(-collision.get_normal() * collider.inertia)
 
 func instance_random_projectile():
-	var random_projectile = rng.randi_range(0, len(projectiles) - 1)
-	match(projectiles[random_projectile]):
-		"book":
-			return book_scn.instantiate()
-		"stapler":
-			return stapler_scn.instantiate()
+	return projectiles[rng.randi_range(0, len(projectiles) - 1)].instantiate()
 
 func regen_stamina():
 	if currStamina < 100:
@@ -117,6 +135,7 @@ func _on_dialogue_ended(resource: DialogueResource):
 	var title = resource.get_titles()[0]
 	if title == "dexter_intro":
 		$LightningTimer.start()
+		level.complete_objective(curr_objective)
 		PlayerData.dexter_party = true
 		get_tree().current_scene.get_node("Dexter").queue_free()
 
@@ -160,7 +179,6 @@ func should_flip_sprite(direction):
 	elif direction < 0 and not $PlayerAnimation.flip_h:
 		$PlayerAnimation.flip_h = true
 
-
 func _on_lightning_timer_timeout():
 	var zombies: Array[Node2D] = $LightningArea.get_overlapping_bodies()
 	if len(zombies) > 0:
@@ -176,4 +194,9 @@ func _on_lightning_timer_timeout():
 		lightning.add_point(global_position)
 		lightning.add_point(closest_zombie.global_position)
 		get_tree().get_root().call_deferred("add_child", lightning)
+		$LightningSound.play()
 		closest_zombie.take_damage()
+
+func _on_invincibility_timer_timeout():
+	$AnimationPlayer.stop()
+	invincible = false

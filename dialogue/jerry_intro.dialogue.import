@@ -1,0 +1,14 @@
+[remap]
+
+importer="dialogue_manager_compiler_8"
+type="Resource"
+uid="uid://drql0kphkvaiu"
+path="res://.godot/imported/jerry_intro.dialogue-8ee669d1feca0b9d8d8c6575f9e63d8f.tres"
+
+[deps]
+
+source_file="res://dialogue/jerry_intro.dialogue"
+dest_files=["res://.godot/imported/jerry_intro.dialogue-8ee669d1feca0b9d8d8c6575f9e63d8f.tres"]
+
+[params]
+

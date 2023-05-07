@@ -23,6 +23,7 @@ func _ready():
 	player = get_tree().current_scene.get_node("Player")
 
 func _process(delta):
+	spawn_limit = get_tree().current_scene.max_zombies
 	if should_spawn:
 		if len(get_overlapping_bodies()) > 0 or global_position.distance_to(player.global_position) < 300:
 			var zombie_count = len(get_tree().get_nodes_in_group("Zombie"))

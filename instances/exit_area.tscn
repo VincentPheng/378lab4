@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://cptno8wvd8i2r"]
+
+[ext_resource type="Script" path="res://scripts/exit_area.gd" id="1_d18dk"]
+
+[node name="ExitArea" type="Area2D"]
+collision_layer = 0
+script = ExtResource("1_d18dk")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -1,0 +1,136 @@
+[gd_scene load_steps=7 format=3 uid="uid://cmeq2b77vxcas"]
+
+[ext_resource type="Script" path="res://scripts/upgrade_screen.gd" id="1_2gqnl"]
+[ext_resource type="Theme" uid="uid://xp6h1nwsksj4" path="res://hud.tres" id="1_kpl7b"]
+[ext_resource type="Texture2D" uid="uid://c6emahif11t5q" path="res://sprites/jerry.png" id="2_5wilc"]
+[ext_resource type="Texture2D" uid="uid://43f7vdbj20ev" path="res://sprites/dexter.png" id="3_o7jsy"]
+[ext_resource type="Texture2D" uid="uid://bhw2qlnqdewjj" path="res://sprites/coil.png" id="5_p0g1u"]
+[ext_resource type="Texture2D" uid="uid://dsgm15ujtyjct" path="res://sprites/subwoofer.png" id="6_8fr1q"]
+
+[node name="UpgradeScreen" type="CanvasLayer"]
+script = ExtResource("1_2gqnl")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.505882, 0, 0, 1)
+
+[node name="NextButton" type="Button" parent="."]
+offset_left = 896.0
+offset_top = 608.0
+offset_right = 1264.0
+offset_bottom = 704.0
+theme = ExtResource("1_kpl7b")
+text = "Kill More Zombies!"
+
+[node name="DexterUpgrade" type="Node2D" parent="."]
+
+[node name="Label" type="Label" parent="DexterUpgrade"]
+offset_left = 248.0
+offset_top = 72.0
+offset_right = 362.0
+offset_bottom = 107.0
+theme = ExtResource("1_kpl7b")
+text = "Dexter"
+
+[node name="Dexter" type="Sprite2D" parent="DexterUpgrade"]
+position = Vector2(304, 184)
+scale = Vector2(5, 5)
+texture = ExtResource("3_o7jsy")
+
+[node name="Button2" type="Button" parent="DexterUpgrade"]
+offset_left = 424.0
+offset_top = 256.0
+offset_right = 464.0
+offset_bottom = 336.0
+theme = ExtResource("1_kpl7b")
+text = "+"
+
+[node name="Button3" type="Button" parent="DexterUpgrade"]
+offset_left = 424.0
+offset_top = 392.0
+offset_right = 464.0
+offset_bottom = 472.0
+theme = ExtResource("1_kpl7b")
+text = "-"
+
+[node name="Label2" type="Label" parent="DexterUpgrade"]
+offset_left = 64.0
+offset_top = 280.0
+offset_right = 344.0
+offset_bottom = 315.0
+theme = ExtResource("1_kpl7b")
+text = "# of Shocks:"
+horizontal_alignment = 2
+
+[node name="Label4" type="Label" parent="DexterUpgrade"]
+offset_left = 360.0
+offset_top = 280.0
+offset_right = 380.0
+offset_bottom = 315.0
+theme = ExtResource("1_kpl7b")
+text = "1"
+
+[node name="Label5" type="Label" parent="DexterUpgrade"]
+offset_left = 360.0
+offset_top = 416.0
+offset_right = 380.0
+offset_bottom = 451.0
+theme = ExtResource("1_kpl7b")
+text = "5s"
+
+[node name="Label3" type="Label" parent="DexterUpgrade"]
+offset_left = 64.0
+offset_top = 416.0
+offset_right = 344.0
+offset_bottom = 451.0
+theme = ExtResource("1_kpl7b")
+text = "Shock Cooldown:"
+horizontal_alignment = 2
+
+[node name="JerryUpgrade" type="Node2D" parent="."]
+
+[node name="Label2" type="Label" parent="JerryUpgrade"]
+offset_left = 952.0
+offset_top = 72.0
+offset_right = 1050.0
+offset_bottom = 107.0
+theme = ExtResource("1_kpl7b")
+text = "Jerry"
+
+[node name="Jerry" type="Sprite2D" parent="JerryUpgrade"]
+position = Vector2(992, 184)
+scale = Vector2(5, 5)
+texture = ExtResource("2_5wilc")
+
+[node name="CoilCountLabel" type="Label" parent="."]
+offset_left = 88.0
+offset_top = 664.0
+offset_right = 128.0
+offset_bottom = 699.0
+theme = ExtResource("1_kpl7b")
+text = "00"
+
+[node name="SubwooferCountLabel" type="Label" parent="."]
+offset_left = 344.0
+offset_top = 664.0
+offset_right = 384.0
+offset_bottom = 699.0
+theme = ExtResource("1_kpl7b")
+text = "00"
+
+[node name="Coil" type="Sprite2D" parent="."]
+position = Vector2(160, 672)
+scale = Vector2(4, 4)
+texture = ExtResource("5_p0g1u")
+
+[node name="Subwoofer" type="Sprite2D" parent="."]
+position = Vector2(416, 672)
+scale = Vector2(4, 4)
+texture = ExtResource("6_8fr1q")
+
+[connection signal="pressed" from="NextButton" to="." method="_on_next_button_pressed"]
+[connection signal="pressed" from="DexterUpgrade/Button2" to="." method="_on_button_2_pressed"]

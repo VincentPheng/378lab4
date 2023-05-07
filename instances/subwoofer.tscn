@@ -1,0 +1,74 @@
+[gd_scene load_steps=8 format=3 uid="uid://5rs0dmscwh2b"]
+
+[ext_resource type="Script" path="res://scripts/special_pickup.gd" id="1_06c46"]
+[ext_resource type="Texture2D" uid="uid://dsgm15ujtyjct" path="res://sprites/subwoofer.png" id="1_67tka"]
+[ext_resource type="AudioStream" uid="uid://b5skakxua4wv" path="res://sounds/subwoofer_pickup.mp3" id="3_v2man"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2u1f5"]
+size = Vector2(14, 16)
+
+[sub_resource type="Animation" id="Animation_0r1f2"]
+resource_name = "float"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../../Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -4)]
+}
+
+[sub_resource type="Animation" id="Animation_e24dt"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../../Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_y6xb8"]
+_data = {
+"RESET": SubResource("Animation_e24dt"),
+"float": SubResource("Animation_0r1f2")
+}
+
+[node name="Subwoofer" type="Node2D"]
+script = ExtResource("1_06c46")
+type = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_67tka")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 32
+collision_mask = 32
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_2u1f5")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Area2D/CollisionShape2D")
+autoplay = "float"
+libraries = {
+"": SubResource("AnimationLibrary_y6xb8")
+}
+
+[node name="PickupSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_v2man")
+volume_db = 10.0
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="finished" from="PickupSound" to="." method="_on_pickup_sound_finished"]

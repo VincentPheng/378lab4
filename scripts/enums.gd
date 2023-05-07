@@ -1,6 +1,11 @@
-class_name Enums
+extends Node
 
 enum ActionableType {
 	DIALOGUE,
 	INTERACTABLE
+}
+
+enum SpecialPickups {
+	Coil,
+	Subwoofer
 }

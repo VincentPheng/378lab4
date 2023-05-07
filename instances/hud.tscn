@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dld23s7sdxl3a"]
+[gd_scene load_steps=14 format=3 uid="uid://dld23s7sdxl3a"]
 
 [ext_resource type="Script" path="res://scripts/hud.gd" id="1_6xcc1"]
 [ext_resource type="Texture2D" uid="uid://bug2uci048bta" path="res://sprites/cursor.png" id="2_aps4n"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://bg0hyj460m7uc" path="res://sprites/stapler2.png" id="6_y8ybp"]
 [ext_resource type="Texture2D" uid="uid://b3lmb5grcveq2" path="res://sprites/pencils1.png" id="7_sv8kj"]
 [ext_resource type="Texture2D" uid="uid://d12ro65dnav0b" path="res://sprites/book1.png" id="8_njk7t"]
+[ext_resource type="Texture2D" uid="uid://cf6ie7pmlux12" path="res://sprites/hud_hit.png" id="8_vc7tq"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_woaqd"]
 
@@ -14,6 +15,43 @@
 shader = ExtResource("6_7yut1")
 shader_parameter/scanline_count = 500.0
 shader_parameter/warp = 4.5
+
+[sub_resource type="Animation" id="Animation_ecs50"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_y8vhl"]
+resource_name = "fade"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8tjfc"]
+_data = {
+"RESET": SubResource("Animation_ecs50"),
+"fade": SubResource("Animation_y8vhl")
+}
 
 [node name="HUD" type="CanvasLayer"]
 process_mode = 3
@@ -42,6 +80,31 @@ texture = ExtResource("7_sv8kj")
 position = Vector2(1254, 682)
 scale = Vector2(2, 2)
 texture = ExtResource("8_njk7t")
+
+[node name="ObjectiveArea" type="ColorRect" parent="."]
+offset_right = 272.0
+offset_bottom = 96.0
+color = Color(0.211765, 0.211765, 0.211765, 0.792157)
+
+[node name="Objective" type="Label" parent="ObjectiveArea"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 56.0
+offset_right = 264.0
+offset_bottom = 91.0
+theme = ExtResource("4_pqm74")
+text = "Talk to Dexter"
+horizontal_alignment = 1
+
+[node name="ObjectiveTitle" type="Label" parent="ObjectiveArea"]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 8.0
+offset_right = 226.0
+offset_bottom = 43.0
+theme = ExtResource("4_pqm74")
+theme_override_colors/font_color = Color(0.764706, 0, 0, 1)
+text = "Objectives"
 
 [node name="PauseScreen" type="Node2D" parent="."]
 visible = false
@@ -83,6 +146,7 @@ text = "Audio"
 horizontal_alignment = 2
 
 [node name="AudioSlider" type="HSlider" parent="PauseScreen/AudioLabel"]
+layout_mode = 0
 offset_left = 248.0
 offset_right = 824.0
 offset_bottom = 32.0
@@ -137,6 +201,94 @@ max_value = 7.0
 step = 0.5
 value = 4.5
 
+[node name="EndScreen" type="Node2D" parent="."]
+visible = false
+
+[node name="PauseOverlay" type="TextureRect" parent="EndScreen"]
+modulate = Color(0.184314, 0.184314, 0.184314, 0.768627)
+offset_right = 1280.0
+offset_bottom = 720.0
+texture = SubResource("CanvasTexture_woaqd")
+
+[node name="UpgradePartyButton" type="Button" parent="EndScreen"]
+offset_left = 496.0
+offset_top = 416.0
+offset_right = 776.0
+offset_bottom = 472.0
+theme = ExtResource("4_pqm74")
+text = "Upgrade Party"
+
+[node name="ZombiesKilledLabel" type="Label" parent="EndScreen"]
+offset_left = 248.0
+offset_top = 288.0
+offset_right = 624.0
+offset_bottom = 323.0
+theme = ExtResource("4_pqm74")
+text = "Zombies Annihilated:"
+horizontal_alignment = 2
+
+[node name="ZombiesKilledAmountLabel" type="Label" parent="EndScreen"]
+offset_left = 640.0
+offset_top = 288.0
+offset_right = 1016.0
+offset_bottom = 323.0
+theme = ExtResource("4_pqm74")
+text = "000"
+
+[node name="SpecialPickupsAmountLabel" type="Label" parent="EndScreen"]
+visible = false
+offset_left = 640.0
+offset_top = 344.0
+offset_right = 1016.0
+offset_bottom = 379.0
+theme = ExtResource("4_pqm74")
+text = "0/0"
+
+[node name="SpecialPickupsLabel" type="Label" parent="EndScreen"]
+visible = false
+offset_left = 256.0
+offset_top = 344.0
+offset_right = 624.0
+offset_bottom = 379.0
+theme = ExtResource("4_pqm74")
+text = "Special Pickups:"
+horizontal_alignment = 2
+
+[node name="EndLabel" type="Label" parent="EndScreen"]
+offset_left = 408.0
+offset_top = 192.0
+offset_right = 884.0
+offset_bottom = 259.0
+theme = ExtResource("4_pqm74")
+theme_override_font_sizes/font_size = 64
+text = "You survived!"
+
+[node name="DeathScreen" type="Node2D" parent="."]
+visible = false
+
+[node name="PauseOverlay" type="TextureRect" parent="DeathScreen"]
+modulate = Color(0.184314, 0.184314, 0.184314, 0.768627)
+offset_right = 1280.0
+offset_bottom = 720.0
+texture = SubResource("CanvasTexture_woaqd")
+
+[node name="DeadLabel" type="Label" parent="DeathScreen"]
+offset_left = 424.0
+offset_top = 256.0
+offset_right = 836.0
+offset_bottom = 323.0
+theme = ExtResource("4_pqm74")
+theme_override_font_sizes/font_size = 64
+text = "You're dead"
+
+[node name="RestartButton" type="Button" parent="DeathScreen"]
+offset_left = 504.0
+offset_top = 344.0
+offset_right = 776.0
+offset_bottom = 400.0
+theme = ExtResource("4_pqm74")
+text = "Try again"
+
 [node name="CRTFilter" type="Control" parent="."]
 visible = false
 layout_mode = 3
@@ -155,7 +307,24 @@ mouse_filter = 2
 [node name="Crosshair" type="Sprite2D" parent="."]
 texture = ExtResource("2_aps4n")
 
+[node name="HitHud" type="TextureRect" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_vc7tq")
+
+[node name="HitHudFade" type="AnimationPlayer" parent="HitHud"]
+libraries = {
+"": SubResource("AnimationLibrary_8tjfc")
+}
+
 [connection signal="drag_ended" from="PauseScreen/ScanlineLabel/ScanlineSlider" to="." method="_on_scanline_slider_drag_ended"]
 [connection signal="drag_ended" from="PauseScreen/AudioLabel/AudioSlider" to="." method="_on_audio_slider_drag_ended"]
 [connection signal="pressed" from="PauseScreen/CRTFilterOptionLabel/CRTFilterOption" to="." method="_on_crt_filter_option_pressed"]
 [connection signal="drag_ended" from="PauseScreen/CRTWarpLabel/CRTWarpSlider" to="." method="_on_crt_warp_slider_drag_ended"]
+[connection signal="pressed" from="EndScreen/UpgradePartyButton" to="." method="_on_upgrade_party_button_pressed"]
+[connection signal="pressed" from="DeathScreen/RestartButton" to="." method="_on_restart_button_pressed"]
+[connection signal="animation_finished" from="HitHud/HitHudFade" to="." method="_on_hit_hud_fade_animation_finished"]
