@@ -59,12 +59,14 @@ size = Vector2(10, 15)
 [node name="Zombie" type="CharacterBody2D" groups=["Zombie"]]
 z_index = 1
 rotation = -0.174533
+scale = Vector2(1.00223, 0.986376)
 collision_layer = 4
 collision_mask = 70
 script = ExtResource("1_8qj23")
+SPEED = 60
 health = 3
-loot_drop_chance = 10
 damage = 15
+knockback_multiplier = 70
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_21udh")
@@ -118,11 +120,11 @@ stream = ExtResource("6_gqomb")
 
 [node name="MoanSound1" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("7_8difw")
-volume_db = 15.0
+volume_db = 5.0
 
 [node name="MoanSound2" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("8_c4qd5")
-volume_db = 15.0
+volume_db = 5.0
 
 [node name="AttackSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("9_npp0r")

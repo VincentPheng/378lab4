@@ -71,6 +71,7 @@ func _on_crt_warp_slider_drag_ended(value_changed):
 
 func _on_restart_button_pressed():
 	PlayerData.projectiles_left = 10
+	PlayerData.player_health = 100
 	get_tree().paused = false
 	get_tree().reload_current_scene()
 

@@ -6,6 +6,7 @@ class_name Player
 @onready var table_scn = preload("res://instances/table.tscn")
 @onready var table_sprite = preload("res://sprites/table.png")
 @onready var lightning_scn = preload("res://instances/lightning_effect.tscn")
+@onready var rumble_scn = preload("res://instances/bass_rumble.tscn")
 
 @export var SPEED := 300.0
 @export var baseHealth := 100
@@ -26,8 +27,13 @@ var currStamina := baseStamina
 var currHealth := baseHealth
 var talking := false
 var curr_objective
+var riffs: Array[Node]
 
 func _ready():
+	$LightningTimer.wait_time = PlayerData.shock_cooldown
+	currHealth = PlayerData.player_health
+	$HealthBar.value = currHealth
+	riffs = [$Riff1, $Riff2]
 	projectiles = [book_scn, stapler_scn]
 	projectile_spawns = [
 		$ProjectileSpawnTop,
@@ -42,6 +48,11 @@ func _ready():
 	hud = get_tree().current_scene.get_node("HUD")
 	level = get_tree().current_scene
 	curr_objective = level.objectives[-1]
+	
+	if PlayerData.dexter_party:
+		$LightningTimer.start()
+	if PlayerData.jerry_party:
+		$RiffTimer.start()
 	
 
 func _physics_process(delta):
@@ -67,6 +78,7 @@ func _input(event):
 				var actionable_type = actionables[0].action()
 				if actionable_type[0] == Enums.ActionableType.DIALOGUE:
 					talking = true
+					level.freeze_zombies = true
 				elif actionable_type[0] == Enums.ActionableType.INTERACTABLE:
 					$HoldingSprite.visible = true
 					$HoldingSprite.texture = table_sprite
@@ -84,12 +96,16 @@ func take_damage(damage: int):
 	if currHealth <= 0:
 		hud.dead()
 	else:
+		PlayerData.player_health = currHealth
 		player_camera.shake()
 		hud.hit()
 		invincible = true
 		$HurtSound.play()
 		$AnimationPlayer.play("take_damage")
 		$InvincibilityTimer.start()
+
+func update_health_bar():
+	$HealthBar.value = currHealth
 
 func push_object(collision):
 	if collision and collision.get_collider().is_in_group("MoveableEnvironment"):
@@ -132,12 +148,18 @@ func throw():
 
 func _on_dialogue_ended(resource: DialogueResource):
 	talking = false
+	level.freeze_zombies = false
 	var title = resource.get_titles()[0]
 	if title == "dexter_intro":
 		$LightningTimer.start()
 		level.complete_objective(curr_objective)
 		PlayerData.dexter_party = true
 		get_tree().current_scene.get_node("Dexter").queue_free()
+	elif title == "jerry_intro":
+		$RiffTimer.start()
+		level.complete_objective(curr_objective)
+		PlayerData.jerry_party = true
+		get_tree().current_scene.get_node("Jerry").queue_free()
 
 func rotate_spawns():
 	for spawn in projectile_spawns:
@@ -182,21 +204,34 @@ func should_flip_sprite(direction):
 func _on_lightning_timer_timeout():
 	var zombies: Array[Node2D] = $LightningArea.get_overlapping_bodies()
 	if len(zombies) > 0:
-		var closest_zombie = zombies[0]
-		var closest_dist = zombies[0].global_position.distance_to(global_position)
-		var dist
-		for zombie in zombies:
-			dist = zombie.global_position.distance_to(global_position)
-			if dist < closest_dist:
-				closest_zombie = zombie
-				closest_dist = dist
-		var lightning: Line2D = lightning_scn.instantiate()
-		lightning.add_point(global_position)
-		lightning.add_point(closest_zombie.global_position)
-		get_tree().get_root().call_deferred("add_child", lightning)
-		$LightningSound.play()
-		closest_zombie.take_damage()
+		for i in range(PlayerData.num_shock):
+			if len(zombies) <= 0:
+				break
+			var random_zombie_index = rng.randi_range(0, len(zombies) - 1)
+			var closest_zombie = zombies[random_zombie_index]
+			zombies.pop_at(random_zombie_index)
+			var lightning: Line2D = lightning_scn.instantiate()
+			lightning.add_point(global_position)
+			lightning.add_point(closest_zombie.global_position)
+			get_tree().get_root().call_deferred("add_child", lightning)
+			$LightningSound.play()
+			closest_zombie.take_damage()
 
 func _on_invincibility_timer_timeout():
 	$AnimationPlayer.stop()
 	invincible = false
+
+
+func _on_riff_timer_timeout():
+	riffs[rng.randi_range(0, len(riffs) - 1)].play()
+	var rumble_particle_instance = rumble_scn.instantiate()
+	rumble_particle_instance.global_position = global_position
+	get_tree().current_scene.call_deferred("add_child", rumble_particle_instance)
+	rumble_particle_instance.emitting = true
+	rumble_particle_instance.start_emit = true
+	var zombies_inner: Array[Node2D] = $RiffInner.get_overlapping_bodies()
+	var zombies_outer: Array[Node2D] = $RiffOuter.get_overlapping_bodies()
+	for inner_zombie in zombies_inner:
+		inner_zombie.take_damage()
+	for i in range(len(zombies_outer) - 1, -1, -1):
+		zombies_outer[i].knockback()

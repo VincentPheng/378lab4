@@ -7,6 +7,8 @@ class_name Level
 
 @onready var hud: HUD = get_node("HUD")
 
+var freeze_zombies = false
+
 func _ready():
 	hud.update_objective(objectives[-1])
 

@@ -1,41 +1,55 @@
 extends CharacterBody2D
-
+class_name Zombie
 
 @export var SPEED = 50
 @export var health = 10
 @export var permanent = false
-@export var loot_drop_chance = 25
+@export var loot_drop_chance = 10
 @export var damage = 10
+@export var knockback_multiplier = 5
 
 var player
+var level
 var blood = preload("res://instances/blood_splatter.tscn")
 var projectile_box = preload("res://instances/projectile_box.tscn")
+var health_pack = preload("res://instances/health_pack.tscn")
 var damaged_by = []
 var hit_sounds
 var moan_sounds
 var dead = false
 var in_player_range := false
 var despawn_range := false
+var loot: Array[Resource]
 
+var last_delta
 var rng = RandomNumberGenerator.new()
 
 func _ready():
+	loot = [projectile_box, health_pack]
 	$HealthBar.max_value = health
 	$HealthBar.value = health
+	level = get_tree().current_scene
 	player = get_tree().current_scene.get_node("Player")
 	hit_sounds = [$HitSound1, $HitSound2, $HitSound3]
 	moan_sounds = [$MoanSound1, $MoanSound2]
 
 func _physics_process(delta):
+	last_delta = delta
 	if not permanent:
 		despawn_range = position.distance_to(player.position) > 400
 		if despawn_range:
 			queue_free()
 	in_player_range = position.distance_to(player.position) < 200
-	if in_player_range:
+	if in_player_range and not level.freeze_zombies:
 		var velocity = position.direction_to(player.position)
 		should_flip_sprite(velocity.x)
 		push_object(move_and_collide(velocity * SPEED * delta))
+
+func knockback():
+	collision_mask = 66
+	var velocity = position.direction_to(player.position) * -1
+	push_object(move_and_collide(velocity * SPEED * knockback_multiplier * last_delta))
+	collision_mask = 70
 
 func push_object(collision):
 	if collision and collision.get_collider().is_in_group("MoveableEnvironment"):
@@ -69,9 +83,9 @@ func take_damage():
 func should_drop_loot():
 	var roll = rng.randi_range(1, 100)
 	if roll <= loot_drop_chance:
-		var projectile_box_instance = projectile_box.instantiate()
-		get_tree().current_scene.call_deferred("add_child", projectile_box_instance)
-		projectile_box_instance.global_position = global_position
+		var loot_instance = loot[rng.randi_range(0, len(loot) - 1)].instantiate()
+		get_tree().current_scene.call_deferred("add_child", loot_instance)
+		loot_instance.global_position = global_position
 
 func _on_projectile_detector_body_entered(body):
 	if (abs(body.linear_velocity.x) > 30 or abs(body.linear_velocity.y) > 30) and body not in damaged_by:

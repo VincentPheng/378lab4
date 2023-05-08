@@ -18,6 +18,24 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.505882, 0, 0, 1)
 
+[node name="Label" type="Label" parent="ColorRect"]
+layout_mode = 0
+offset_left = 422.0
+offset_top = 473.0
+offset_right = 462.0
+offset_bottom = 508.0
+theme = ExtResource("1_kpl7b")
+text = "-1"
+
+[node name="Label2" type="Label" parent="ColorRect"]
+layout_mode = 0
+offset_left = 426.0
+offset_top = 337.0
+offset_right = 466.0
+offset_bottom = 372.0
+theme = ExtResource("1_kpl7b")
+text = "-1"
+
 [node name="NextButton" type="Button" parent="."]
 offset_left = 896.0
 offset_top = 608.0
@@ -41,19 +59,19 @@ position = Vector2(304, 184)
 scale = Vector2(5, 5)
 texture = ExtResource("3_o7jsy")
 
-[node name="Button2" type="Button" parent="DexterUpgrade"]
-offset_left = 424.0
+[node name="UpgradeShockNumberButton" type="Button" parent="DexterUpgrade"]
+offset_left = 448.0
 offset_top = 256.0
-offset_right = 464.0
+offset_right = 488.0
 offset_bottom = 336.0
 theme = ExtResource("1_kpl7b")
 text = "+"
 
-[node name="Button3" type="Button" parent="DexterUpgrade"]
-offset_left = 424.0
-offset_top = 392.0
-offset_right = 464.0
-offset_bottom = 472.0
+[node name="UpgradeShockCooldownButton" type="Button" parent="DexterUpgrade"]
+offset_left = 449.0
+offset_top = 390.0
+offset_right = 489.0
+offset_bottom = 470.0
 theme = ExtResource("1_kpl7b")
 text = "-"
 
@@ -66,7 +84,7 @@ theme = ExtResource("1_kpl7b")
 text = "# of Shocks:"
 horizontal_alignment = 2
 
-[node name="Label4" type="Label" parent="DexterUpgrade"]
+[node name="ShockNumber" type="Label" parent="DexterUpgrade"]
 offset_left = 360.0
 offset_top = 280.0
 offset_right = 380.0
@@ -74,13 +92,13 @@ offset_bottom = 315.0
 theme = ExtResource("1_kpl7b")
 text = "1"
 
-[node name="Label5" type="Label" parent="DexterUpgrade"]
+[node name="ShockCooldown" type="Label" parent="DexterUpgrade"]
 offset_left = 360.0
 offset_top = 416.0
 offset_right = 380.0
 offset_bottom = 451.0
 theme = ExtResource("1_kpl7b")
-text = "5s"
+text = "5.0s"
 
 [node name="Label3" type="Label" parent="DexterUpgrade"]
 offset_left = 64.0
@@ -132,5 +150,16 @@ position = Vector2(416, 672)
 scale = Vector2(4, 4)
 texture = ExtResource("6_8fr1q")
 
+[node name="Coil2" type="Sprite2D" parent="."]
+position = Vector2(480, 349)
+scale = Vector2(2, 2)
+texture = ExtResource("5_p0g1u")
+
+[node name="Coil3" type="Sprite2D" parent="."]
+position = Vector2(476, 484)
+scale = Vector2(2, 2)
+texture = ExtResource("5_p0g1u")
+
 [connection signal="pressed" from="NextButton" to="." method="_on_next_button_pressed"]
-[connection signal="pressed" from="DexterUpgrade/Button2" to="." method="_on_button_2_pressed"]
+[connection signal="pressed" from="DexterUpgrade/UpgradeShockNumberButton" to="." method="_on_upgrade_shock_number_button_pressed"]
+[connection signal="pressed" from="DexterUpgrade/UpgradeShockCooldownButton" to="." method="_on_upgrade_shock_cooldown_button_pressed"]

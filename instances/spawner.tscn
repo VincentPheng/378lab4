@@ -7,6 +7,6 @@ collision_layer = 0
 script = ExtResource("1_4371k")
 
 [node name="SpawnTimer" type="Timer" parent="."]
-wait_time = 2.0
+wait_time = 0.5
 
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]
