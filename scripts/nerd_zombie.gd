@@ -19,7 +19,7 @@ func _ready():
 
 func actor_setup():
 	await get_tree().physics_frame
-	set_movement_target(player.global_position)
+	set_movement_target(player.get_collision_position())
 
 func set_movement_target(movement_target: Vector2):
 	navigation_agent.target_position = movement_target
@@ -32,10 +32,11 @@ func _physics_process(delta):
 			queue_free()
 	in_player_range = position.distance_to(player.position) < 200
 	if in_player_range and not level.freeze_zombies:
-		set_movement_target(player.global_position)
-		var current_agent_position: Vector2 = global_position
-		var next_path_position: Vector2 = navigation_agent.get_next_path_position()
-		var new_velocity: Vector2 = next_path_position - current_agent_position
-		new_velocity = new_velocity.normalized()
-		should_flip_sprite(new_velocity.x)
-		push_object(move_and_collide(new_velocity * SPEED * delta))
+		set_movement_target(player.get_collision_position())
+		if navigation_agent.is_target_reachable():
+			var current_agent_position: Vector2 = global_position
+			var next_path_position: Vector2 = navigation_agent.get_next_path_position()
+			var new_velocity: Vector2 = next_path_position - current_agent_position
+			new_velocity = new_velocity.normalized()
+			should_flip_sprite(new_velocity.x)
+			push_object(move_and_collide(new_velocity * SPEED * delta))

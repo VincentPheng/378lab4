@@ -3,7 +3,7 @@ extends Node
 var projectiles_left := 10
 var player_health := 100
 var dexter_party := false
-var jerry_party := false
+var jerry_party := true
 var zombies_killed := 0
 var num_coils := 1
 var num_subwoofer := 1
@@ -11,7 +11,8 @@ var num_subwoofer := 1
 var crt_enabled := true
 var crt_scanline_setting := 500
 var crt_warp_setting := 4.5
-var audio_setting := -15
+var audio_setting := -15.0
+var riff_audio_setting := -15.0
 
 var num_shock := 1
 var shock_cooldown := 5.0

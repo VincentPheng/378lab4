@@ -201,6 +201,9 @@ func should_flip_sprite(direction):
 	elif direction < 0 and not $PlayerAnimation.flip_h:
 		$PlayerAnimation.flip_h = true
 
+func get_collision_position():
+	return $CollisionShape2D.global_position
+
 func _on_lightning_timer_timeout():
 	var zombies: Array[Node2D] = $LightningArea.get_overlapping_bodies()
 	if len(zombies) > 0:
@@ -220,7 +223,6 @@ func _on_lightning_timer_timeout():
 func _on_invincibility_timer_timeout():
 	$AnimationPlayer.stop()
 	invincible = false
-
 
 func _on_riff_timer_timeout():
 	riffs[rng.randi_range(0, len(riffs) - 1)].play()

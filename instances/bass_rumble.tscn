@@ -17,5 +17,6 @@ spread = 0.0
 gravity = Vector2(0, 0)
 radial_accel_min = 56.09
 radial_accel_max = 56.09
+scale_amount_max = 3.0
 color = Color(0.196078, 0.196078, 0.196078, 1)
 script = ExtResource("1_x12g2")

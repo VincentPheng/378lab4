@@ -6,7 +6,7 @@ class_name Zombie
 @export var permanent = false
 @export var loot_drop_chance = 10
 @export var damage = 10
-@export var knockback_multiplier = 5
+@export var knockback_multiplier = 50
 
 var player
 var level

@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://pfd7m6oxf50v"]
+[gd_scene load_steps=37 format=3 uid="uid://pfd7m6oxf50v"]
 
 [ext_resource type="Script" path="res://scripts/level.gd" id="1_63ffp"]
 [ext_resource type="PackedScene" uid="uid://bhc1flkqys1ud" path="res://instances/player.tscn" id="1_kacfe"]
@@ -21,7 +21,6 @@
 [ext_resource type="PackedScene" uid="uid://5rs0dmscwh2b" path="res://instances/subwoofer.tscn" id="19_c4ljq"]
 [ext_resource type="PackedScene" uid="uid://cptno8wvd8i2r" path="res://instances/exit_area.tscn" id="20_srsvf"]
 [ext_resource type="PackedScene" uid="uid://dnfhxciio3vdq" path="res://instances/health_pack.tscn" id="21_ayeo0"]
-[ext_resource type="PackedScene" uid="uid://b4qnavc3uxlxl" path="res://instances/nerd_zombie.tscn" id="22_bnrrv"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_khy3n"]
 texture = ExtResource("3_jcn3d")
@@ -635,7 +634,3 @@ shape = SubResource("RectangleShape2D_p50oa")
 
 [node name="HealthPack" parent="." instance=ExtResource("21_ayeo0")]
 position = Vector2(-728, -1136)
-
-[node name="NerdZombie" parent="." instance=ExtResource("22_bnrrv")]
-position = Vector2(216, -160)
-permanent = true

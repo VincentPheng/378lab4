@@ -82,8 +82,9 @@ animations = [{
 "speed": 16.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_gddsf"]
-size = Vector2(9, 6)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_r7n1q"]
+radius = 3.0
+height = 9.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sgulk"]
 
@@ -143,10 +144,10 @@ size = Vector2(14, 30)
 radius = 122.016
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_64vk3"]
-radius = 42.0119
+radius = 45.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rvk3n"]
-radius = 75.0067
+radius = 75.0
 
 [node name="Player" type="CharacterBody2D"]
 collision_mask = 66
@@ -159,8 +160,9 @@ animation = &"holding_walking"
 autoplay = "walking"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0.5, 12)
-shape = SubResource("RectangleShape2D_gddsf")
+position = Vector2(0, 12)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_r7n1q")
 
 [node name="HurtSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("8_5npin")
@@ -285,9 +287,11 @@ shape = SubResource("CircleShape2D_rvk3n")
 
 [node name="Riff1" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("13_qdsd4")
+bus = &"Jerry"
 
 [node name="Riff2" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("14_1ri5n")
+bus = &"Jerry"
 
 [node name="RiffTimer" type="Timer" parent="."]
 wait_time = 6.0

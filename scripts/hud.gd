@@ -20,8 +20,11 @@ func _ready():
 	var warp = 10 - filter_material.get_shader_parameter("warp")
 	$PauseScreen/CRTWarpLabel/CRTWarpSlider.value = warp
 	
-	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), PlayerData.audio_setting)
+	PlayerData.audio_setting = AudioServer.get_bus_volume_db(AudioServer.get_bus_index("Master"))
 	$PauseScreen/AudioLabel/AudioSlider.value = PlayerData.audio_setting
+	
+	PlayerData.riff_audio_setting = AudioServer.get_bus_volume_db(AudioServer.get_bus_index("Jerry"))
+	$PauseScreen/RiffAudioLabel/RiffAudioSlider.value = PlayerData.riff_audio_setting
 
 func _input(event):
 	if event is InputEventMouseMotion:
@@ -50,9 +53,12 @@ func dead():
 	get_tree().paused = true
 	$DeathScreen.visible = true
 
+func update_audio_setting(bus: String, new_value):
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index(bus), new_value)
+
 func _on_audio_slider_drag_ended(value_changed):
 	PlayerData.audio_setting =  $PauseScreen/AudioLabel/AudioSlider.value
-	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), PlayerData.audio_setting)
+	update_audio_setting("Master", PlayerData.audio_setting)
 
 
 func _on_crt_filter_option_pressed():
@@ -84,3 +90,9 @@ func _on_upgrade_party_button_pressed():
 	PlayerData.zombies_killed = 0
 	get_tree().paused = false
 	get_tree().change_scene_to_file(next_scene)
+
+
+func _on_riff_audio_slider_drag_ended(value_changed):
+	PlayerData.riff_audio_setting = $PauseScreen/RiffAudioLabel/RiffAudioSlider.value
+	update_audio_setting("Jerry", PlayerData.riff_audio_setting)
+	

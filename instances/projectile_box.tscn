@@ -43,7 +43,7 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_urprs"]
-size = Vector2(10, 9.5)
+size = Vector2(16, 14)
 
 [node name="ProjectileBox" type="Node2D"]
 script = ExtResource("1_4glwf")
@@ -51,7 +51,6 @@ projectiles_per_box_lower = 5
 projectiles_per_box_upper = 10
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.375, 0.375)
 texture = ExtResource("1_w13tt")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -65,7 +64,7 @@ collision_layer = 32
 collision_mask = 32
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(0, 0.75)
+position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_urprs")
 
 [node name="PickupSound" type="AudioStreamPlayer" parent="."]
