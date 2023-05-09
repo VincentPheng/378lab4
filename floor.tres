@@ -1,9 +1,11 @@
-[gd_resource type="TileSet" load_steps=9 format=3 uid="uid://coggk3vt7e0d8"]
+[gd_resource type="TileSet" load_steps=13 format=3 uid="uid://88l7ltuj1wn"]
 
 [ext_resource type="Texture2D" uid="uid://c7hwgook2l2im" path="res://sprites/floor_tile.png" id="1_v58i8"]
 [ext_resource type="Texture2D" uid="uid://f4idx1ha570j" path="res://sprites/floor_tile3.png" id="2_bbuek"]
 [ext_resource type="Texture2D" uid="uid://ck5t4i1ma2ka2" path="res://sprites/floor_tile2.png" id="3_o4cq2"]
 [ext_resource type="Texture2D" uid="uid://dp7k5rtyj0tmd" path="res://sprites/floor_tile4.png" id="4_5vs3w"]
+[ext_resource type="Texture2D" uid="uid://brx2tpmcxw45b" path="res://sprites/bathroom_floor_tile.png" id="5_x6ule"]
+[ext_resource type="Texture2D" uid="uid://cqt61d4twdr6g" path="res://sprites/cafeteria_floor_tile.png" id="6_dpp8a"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_khy3n"]
 texture = ExtResource("1_v58i8")
@@ -41,6 +43,16 @@ texture = ExtResource("3_o4cq2")
 0:1/0/z_index = -6
 1:1/0 = 0
 1:1/0/z_index = -6
+0:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+3:2/0 = 0
+3:3/0 = 0
+2:3/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_siv6d"]
 texture = ExtResource("4_5vs3w")
@@ -53,8 +65,18 @@ texture = ExtResource("4_5vs3w")
 1:1/0 = 0
 1:1/0/z_index = -6
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4icin"]
+texture = ExtResource("5_x6ule")
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2mrcj"]
+texture = ExtResource("6_dpp8a")
+0:0/0 = 0
+
 [resource]
 sources/0 = SubResource("TileSetAtlasSource_khy3n")
 sources/2 = SubResource("TileSetAtlasSource_0p6di")
 sources/1 = SubResource("TileSetAtlasSource_iedtm")
 sources/3 = SubResource("TileSetAtlasSource_siv6d")
+sources/4 = SubResource("TileSetAtlasSource_4icin")
+sources/5 = SubResource("TileSetAtlasSource_2mrcj")

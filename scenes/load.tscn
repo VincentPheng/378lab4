@@ -1,0 +1,48 @@
+[gd_scene load_steps=3 format=3 uid="uid://0mfsvxg613bj"]
+
+[ext_resource type="Theme" uid="uid://xp6h1nwsksj4" path="res://hud.tres" id="1_2600v"]
+
+[sub_resource type="GDScript" id="GDScript_pm1ss"]
+script/source = "extends CanvasLayer
+
+var next_scene: String
+var progress = []
+var scene_load_status = 0
+
+func _ready():
+	ResourceLoader.load_threaded_request(next_scene)
+
+func _process(delta):
+	scene_load_status = ResourceLoader.load_threaded_get_status(next_scene,progress)
+	$ProgressBar.value = progress[0] * 100
+	if scene_load_status == ResourceLoader.THREAD_LOAD_LOADED:
+		get_tree().change_scene_to_packed(ResourceLoader.load_threaded_get(next_scene))
+		queue_free()
+"
+
+[node name="Load" type="CanvasLayer"]
+script = SubResource("GDScript_pm1ss")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Label" type="Label" parent="."]
+offset_top = 320.0
+offset_right = 1280.0
+offset_bottom = 387.0
+theme = ExtResource("1_2600v")
+theme_override_font_sizes/font_size = 64
+text = "Loading..."
+horizontal_alignment = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+offset_left = 216.0
+offset_top = 408.0
+offset_right = 1056.0
+offset_bottom = 456.0
+theme = ExtResource("1_2600v")

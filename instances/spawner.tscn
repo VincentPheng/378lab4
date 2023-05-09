@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/SpawnArea.gd" id="1_4371k"]
 
-[node name="Spawner" type="Area2D"]
+[node name="Spawner" type="Area2D" groups=["Spawner"]]
 collision_layer = 0
 script = ExtResource("1_4371k")
 

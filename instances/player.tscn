@@ -259,7 +259,7 @@ stream = ExtResource("12_4sd0p")
 volume_db = 6.0
 
 [node name="LightningTimer" type="Timer" parent="."]
-wait_time = 5.0
+wait_time = 0.1
 
 [node name="LightningArea" type="Area2D" parent="."]
 visible = false

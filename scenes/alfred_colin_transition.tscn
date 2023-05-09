@@ -1,9 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://cyeleuf6q63wt"]
+[gd_scene load_steps=4 format=3 uid="uid://cyeleuf6q63wt"]
 
+[ext_resource type="Script" path="res://scripts/alfred_colin_transition.gd" id="1_df4mo"]
 [ext_resource type="PackedScene" uid="uid://cmeq2b77vxcas" path="res://instances/upgrade_screen.tscn" id="1_wls2f"]
 [ext_resource type="AudioStream" uid="uid://ugw22nwh3our" path="res://sounds/spotifydown.com - Calm Before the Storm.mp3" id="2_rvkv1"]
 
 [node name="AlfredColinTransition" type="Node2D"]
+script = ExtResource("1_df4mo")
 
 [node name="UpgradeScreen" parent="." instance=ExtResource("1_wls2f")]
 next_scene = "res://scenes/colin_hall.tscn"

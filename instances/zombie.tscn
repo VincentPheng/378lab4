@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://b576yffocdqw2"]
+[gd_scene load_steps=16 format=3 uid="uid://b576yffocdqw2"]
 
 [ext_resource type="Script" path="res://scripts/zombie.gd" id="1_8qj23"]
 [ext_resource type="Texture2D" uid="uid://fudvjp052yg1" path="res://sprites/zombie1.png" id="1_21udh"]
@@ -10,8 +10,9 @@
 [ext_resource type="AudioStream" uid="uid://vquptr3cu1a1" path="res://sounds/zombie_noise_2.mp3" id="8_c4qd5"]
 [ext_resource type="AudioStream" uid="uid://t7182aucceah" path="res://sounds/zombie_attack.mp3" id="9_npp0r"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_17hhv"]
-size = Vector2(14, 15)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_iaxov"]
+radius = 2.83619
+height = 8.20936
 
 [sub_resource type="Animation" id="Animation_ryupl"]
 length = 0.001
@@ -51,13 +52,10 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t3774"]
-size = Vector2(14, 30.4667)
+size = Vector2(14.1032, 30.4667)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2g3ci"]
 size = Vector2(10, 15)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ccspw"]
-size = Vector2(9.99943, 29.0118)
 
 [node name="Zombie" type="CharacterBody2D" groups=["Zombie"]]
 z_index = 1
@@ -76,9 +74,9 @@ knockback_multiplier = 70
 texture = ExtResource("1_21udh")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
-position = Vector2(0, 7.5)
-shape = SubResource("RectangleShape2D_17hhv")
+position = Vector2(-0.11671, 12.3163)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_iaxov")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../Sprite2D")
@@ -88,11 +86,13 @@ libraries = {
 }
 
 [node name="ProjectileDetector" type="Area2D" parent="."]
+visible = false
 collision_layer = 4
 collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ProjectileDetector"]
-position = Vector2(-9.31323e-08, -0.233356)
+position = Vector2(-3.23913e-08, -0.233356)
+scale = Vector2(1, 0.999999)
 shape = SubResource("RectangleShape2D_t3774")
 
 [node name="PlayerDetector" type="Area2D" parent="."]
@@ -137,15 +137,6 @@ volume_db = 10.0
 [node name="MoanTimer" type="Timer" parent="."]
 wait_time = 2.0
 autostart = true
-
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
-collision_layer = 0
-collision_mask = 8
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(0.0866314, 1.67638e-07)
-scale = Vector2(1, 1)
-shape = SubResource("RectangleShape2D_ccspw")
 
 [connection signal="body_entered" from="ProjectileDetector" to="." method="_on_projectile_detector_body_entered"]
 [connection signal="body_entered" from="PlayerDetector" to="." method="_on_player_detector_body_entered"]

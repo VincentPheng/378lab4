@@ -1,0 +1,63 @@
+[gd_scene load_steps=4 format=3 uid="uid://doh2lrgj4ta24"]
+
+[ext_resource type="Theme" uid="uid://xp6h1nwsksj4" path="res://hud.tres" id="1_20awf"]
+[ext_resource type="Script" path="res://scripts/credit_screen.gd" id="1_nkj11"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jce6p"]
+bg_color = Color(0.831373, 0, 0.247059, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="CreditScreen" type="CanvasLayer"]
+script = ExtResource("1_nkj11")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="CreditTitle" type="Label" parent="."]
+offset_left = 512.0
+offset_top = 16.0
+offset_right = 772.0
+offset_bottom = 83.0
+theme = ExtResource("1_20awf")
+theme_override_font_sizes/font_size = 64
+text = "Credits"
+
+[node name="Label" type="Label" parent="."]
+offset_left = 16.0
+offset_top = 104.0
+offset_right = 1268.0
+offset_bottom = 704.0
+theme = ExtResource("1_20awf")
+text = "Godot Screen Shake
+https://www.youtube.com/watch?v=RVtcnkuNUIk
+
+Godot CRT Shader
+https://godotshaders.com/shader/retro-tv-shader/
+
+Sound Effects
+https://freesound.org/
+
+Music from
+https://www.youtube.com/@metalguitarstuff
+
+Godot Documentation
+https://docs.godotengine.org/en/stable/index.html"
+
+[node name="BackButton" type="Button" parent="."]
+offset_left = 576.0
+offset_top = 640.0
+offset_right = 704.0
+offset_bottom = 704.0
+theme = ExtResource("1_20awf")
+theme_override_styles/normal = SubResource("StyleBoxFlat_jce6p")
+text = "Back"
+
+[connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]

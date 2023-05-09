@@ -36,7 +36,7 @@ func _ready():
 func _physics_process(delta):
 	last_delta = delta
 	if not permanent:
-		despawn_range = position.distance_to(player.position) > 400
+		despawn_range = position.distance_to(player.position) > 300
 		if despawn_range:
 			queue_free()
 	in_player_range = position.distance_to(player.position) < 200
@@ -82,6 +82,7 @@ func take_damage():
 
 func should_drop_loot():
 	var roll = rng.randi_range(1, 100)
+	print(roll)
 	if roll <= loot_drop_chance:
 		var loot_instance = loot[rng.randi_range(0, len(loot) - 1)].instantiate()
 		get_tree().current_scene.call_deferred("add_child", loot_instance)
@@ -90,6 +91,8 @@ func should_drop_loot():
 func _on_projectile_detector_body_entered(body):
 	if (abs(body.linear_velocity.x) > 30 or abs(body.linear_velocity.y) > 30) and body not in damaged_by:
 		take_damage()
+		if not body.is_in_group("MoveableEnvironment"):
+			body.fade()
 		damaged_by.append(body)
 
 func _on_hit_sound_finished():

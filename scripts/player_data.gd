@@ -3,10 +3,10 @@ extends Node
 var projectiles_left := 10
 var player_health := 100
 var dexter_party := false
-var jerry_party := true
+var jerry_party := false
 var zombies_killed := 0
-var num_coils := 1
-var num_subwoofer := 1
+var num_coils := 0
+var num_subwoofer := 0
 
 var crt_enabled := true
 var crt_scanline_setting := 500
@@ -20,6 +20,6 @@ var shock_cooldown := 5.0
 func add_special_pickup(special_pickup: Enums.SpecialPickups):
 	match (special_pickup):
 		Enums.SpecialPickups.Coil:
-			num_coils += 4
+			num_coils += 1
 		Enums.SpecialPickups.Subwoofer:
-			num_subwoofer += 4
+			num_subwoofer += 1

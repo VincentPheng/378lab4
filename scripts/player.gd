@@ -48,7 +48,6 @@ func _ready():
 	hud = get_tree().current_scene.get_node("HUD")
 	level = get_tree().current_scene
 	curr_objective = level.objectives[-1]
-	
 	if PlayerData.dexter_party:
 		$LightningTimer.start()
 	if PlayerData.jerry_party:
@@ -129,7 +128,7 @@ func throw():
 		projectile_to_throw.position = projectile_spawn_point.get_global_position()
 		projectile_to_throw.rotation_degrees = projectile_spawn_point.rotation_degrees
 		projectile_to_throw.apply_impulse(Vector2(500, 0).rotated(projectile_spawn_point.global_rotation))
-		get_tree().get_root().call_deferred("add_child", projectile_to_throw)
+		get_tree().current_scene.call_deferred("add_child", projectile_to_throw)
 		$HoldingSprite.visible = false
 		$PlayerAnimation.play("walking")
 		$PlayerAnimation.stop()
@@ -158,6 +157,7 @@ func _on_dialogue_ended(resource: DialogueResource):
 	elif title == "jerry_intro":
 		$RiffTimer.start()
 		level.complete_objective(curr_objective)
+		level.get_node("HoldoutTrigger").is_active = true
 		PlayerData.jerry_party = true
 		get_tree().current_scene.get_node("Jerry").queue_free()
 

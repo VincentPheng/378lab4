@@ -19,8 +19,10 @@ var bottom_right: Vector2
 var can_spawn: bool = true
 var spawn_limit: int
 var should_spawn: bool
+var zombie_drop_rate := 15
 var spawn_table
 var player: Player
+var spawn_range_limit := 200
 
 func _ready():
 	area_size = collision_shape.get_shape().get_rect().size
@@ -38,13 +40,24 @@ func _process(delta):
 		if len(get_overlapping_bodies()) > 0 or global_position.distance_to(player.global_position) < 300:
 			var zombie_count = len(get_tree().get_nodes_in_group("Zombie"))
 			var rand_pos = Vector2(rng.randf_range(top_left.x, bottom_right.x), rng.randf_range(top_left.y, bottom_right.y))
-			if rand_pos.distance_to(get_tree().current_scene.get_node("Player").global_position) > 200:
+			if rand_pos.distance_to(get_tree().current_scene.get_node("Player").global_position) > spawn_range_limit:
 				if zombie_count < spawn_limit and can_spawn:
-					var zombie_instance = get_zombie_type().instantiate()
+					var zombie_instance: Zombie = get_zombie_type().instantiate()
 					zombie_instance.global_position = rand_pos
+					zombie_instance.loot_drop_chance = zombie_drop_rate
 					get_tree().current_scene.add_child(zombie_instance)
 					$SpawnTimer.start()
 					can_spawn = false
+
+func set_spawn_range_limit(new_limit: int):
+	spawn_range_limit = new_limit
+
+func set_spawn_delay(new_delay: float):
+	spawn_delay = new_delay
+	$SpawnTimer.wait_time = spawn_delay
+
+func set_spawned_zombie_drop_rate(new_rate: int):
+	zombie_drop_rate = new_rate
 
 func get_zombie_type():
 	return spawn_table[rng.randi_range(0, len(spawn_table) - 1)]

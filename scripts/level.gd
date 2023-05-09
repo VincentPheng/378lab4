@@ -8,8 +8,11 @@ class_name Level
 @onready var hud: HUD = get_node("HUD")
 
 var freeze_zombies = false
+var spawn_areas
+var main_level_music_position: float = 0.0
 
 func _ready():
+	spawn_areas = get_tree().get_nodes_in_group("Spawner")
 	hud.update_objective(objectives[-1])
 
 func complete_objective(objective: String):
