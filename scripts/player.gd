@@ -44,6 +44,7 @@ func _ready():
 		$ProjectileSpawnRight,
 		$ProjectileSpawnTopRight,
 		$ProjectileSpawnTopLeft]
+	DialogueLabel.seconds_per_step = 1.0
 	DialogueManager.dialogue_ended.connect(_on_dialogue_ended)
 	hud = get_tree().current_scene.get_node("HUD")
 	level = get_tree().current_scene
@@ -61,6 +62,13 @@ func _physics_process(delta):
 		regen_stamina()
 		velocity.x = handle_movement(Input.get_axis("left", "right"), velocity.x)
 		velocity.y = handle_movement(Input.get_axis("up", "down"), velocity.y)
+		if PlayerData.has_fire_extinguisher:
+			if not $FireExtinguisherAttack/ActiveTimer.is_stopped():
+				var active = $FireExtinguisherAttack/ActiveTimer
+				hud.update_fire_extinguisher_cooldown_bar(100 - ((active.wait_time - active.time_left) / active.wait_time) * 100)
+			else:
+				var cooldown = $FireExtinguisherAttack/CooldownTimer
+				hud.update_fire_extinguisher_cooldown_bar(((cooldown.wait_time - cooldown.time_left) / cooldown.wait_time) * 100)
 		should_flip_sprite(Input.get_axis("left", "right"))
 		play_walk_anim()
 		rotate_spawns()
@@ -69,6 +77,11 @@ func _physics_process(delta):
 
 func _input(event):
 	if not talking:
+		if event.is_action_pressed("fire_extinguisher") and $FireExtinguisherAttack/CooldownTimer.is_stopped() and $FireExtinguisherAttack/ActiveTimer.is_stopped() and PlayerData.has_fire_extinguisher:
+			$FireExtinguisherAttack.visible = true
+			$FireExtinguisherAttack/CollisionPolygon2D.disabled = false
+			$FireExtinguisherAttack/DamageTimer.start()
+			$FireExtinguisherAttack/ActiveTimer.start()
 		if event.is_action_pressed("throw"):
 			throw()
 		if event.is_action_pressed("use") and holding == "":
@@ -237,3 +250,7 @@ func _on_riff_timer_timeout():
 		inner_zombie.take_damage()
 	for i in range(len(zombies_outer) - 1, -1, -1):
 		zombies_outer[i].knockback()
+
+func _on_enemy_projectile_detector_body_entered(body):
+	body.queue_free()
+	take_damage(5)

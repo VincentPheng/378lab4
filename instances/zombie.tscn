@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://b576yffocdqw2"]
+[gd_scene load_steps=17 format=3 uid="uid://b576yffocdqw2"]
 
 [ext_resource type="Script" path="res://scripts/zombie.gd" id="1_8qj23"]
 [ext_resource type="Texture2D" uid="uid://fudvjp052yg1" path="res://sprites/zombie1.png" id="1_21udh"]
@@ -52,10 +52,13 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t3774"]
-size = Vector2(14.1032, 30.4667)
+size = Vector2(14.1032, 31.9694)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2g3ci"]
 size = Vector2(10, 15)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_acg1i"]
+size = Vector2(6.24223, 18.4995)
 
 [node name="Zombie" type="CharacterBody2D" groups=["Zombie"]]
 z_index = 1
@@ -66,7 +69,6 @@ collision_mask = 70
 script = ExtResource("1_8qj23")
 SPEED = 60
 health = 3
-loot_drop_chance = 15
 damage = 15
 knockback_multiplier = 70
 
@@ -86,12 +88,12 @@ libraries = {
 }
 
 [node name="ProjectileDetector" type="Area2D" parent="."]
-visible = false
 collision_layer = 4
 collision_mask = 8
+collision_priority = 10.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ProjectileDetector"]
-position = Vector2(-3.23913e-08, -0.233356)
+position = Vector2(-2.23517e-08, 0.518006)
 scale = Vector2(1, 0.999999)
 shape = SubResource("RectangleShape2D_t3774")
 
@@ -137,6 +139,15 @@ volume_db = 10.0
 [node name="MoanTimer" type="Timer" parent="."]
 wait_time = 2.0
 autostart = true
+
+[node name="ProjectileBounceDetector" type="StaticBody2D" parent="."]
+collision_layer = 256
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ProjectileBounceDetector"]
+position = Vector2(0.173262, -0.910387)
+scale = Vector2(0.999999, 0.999998)
+shape = SubResource("RectangleShape2D_acg1i")
 
 [connection signal="body_entered" from="ProjectileDetector" to="." method="_on_projectile_detector_body_entered"]
 [connection signal="body_entered" from="PlayerDetector" to="." method="_on_player_detector_body_entered"]

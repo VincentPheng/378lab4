@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://dld23s7sdxl3a"]
+[gd_scene load_steps=15 format=3 uid="uid://dld23s7sdxl3a"]
 
 [ext_resource type="Script" path="res://scripts/hud.gd" id="1_6xcc1"]
 [ext_resource type="Texture2D" uid="uid://bug2uci048bta" path="res://sprites/cursor.png" id="2_aps4n"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://b3lmb5grcveq2" path="res://sprites/pencils1.png" id="7_sv8kj"]
 [ext_resource type="Texture2D" uid="uid://d12ro65dnav0b" path="res://sprites/book1.png" id="8_njk7t"]
 [ext_resource type="Texture2D" uid="uid://cf6ie7pmlux12" path="res://sprites/hud_hit.png" id="8_vc7tq"]
+[ext_resource type="Texture2D" uid="uid://dc8povtnsgxkw" path="res://sprites/fire_extinguisher.png" id="9_gt01c"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_woaqd"]
 
@@ -63,6 +64,9 @@ offset_top = 656.0
 offset_right = 1208.0
 offset_bottom = 723.0
 theme = ExtResource("4_pqm74")
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 7
 theme_override_font_sizes/font_size = 64
 text = "000"
 
@@ -88,12 +92,15 @@ color = Color(0.211765, 0.211765, 0.211765, 0.792157)
 
 [node name="Objective" type="Label" parent="ObjectiveArea"]
 layout_mode = 0
+offset_left = 8.0
 offset_top = 64.0
-offset_right = 320.0
+offset_right = 312.0
 offset_bottom = 99.0
 theme = ExtResource("4_pqm74")
-text = "Talk to Dexter"
+text = "Find fire extinguisher"
 horizontal_alignment = 1
+clip_text = true
+text_overrun_behavior = 3
 
 [node name="ObjectiveTitle" type="Label" parent="ObjectiveArea"]
 layout_mode = 0
@@ -104,6 +111,28 @@ theme = ExtResource("4_pqm74")
 theme_override_colors/font_color = Color(0.764706, 0, 0, 1)
 text = "Objective"
 horizontal_alignment = 1
+
+[node name="FireExtinguisherAbility" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="FireExtinguisher" type="Sprite2D" parent="FireExtinguisherAbility"]
+position = Vector2(40, 648)
+scale = Vector2(4, 4)
+texture = ExtResource("9_gt01c")
+
+[node name="FireExtinguisherCooldownBar" type="ProgressBar" parent="FireExtinguisherAbility"]
+layout_mode = 0
+offset_left = 80.0
+offset_top = 712.0
+offset_right = 216.0
+offset_bottom = 742.0
+rotation = -1.5708
+theme = ExtResource("4_pqm74")
+value = 10.0
+show_percentage = false
 
 [node name="PauseScreen" type="Node2D" parent="."]
 visible = false
@@ -306,6 +335,22 @@ offset_right = 776.0
 offset_bottom = 400.0
 theme = ExtResource("4_pqm74")
 text = "Try again"
+
+[node name="HoardScreen" type="Node2D" parent="."]
+visible = false
+
+[node name="HoardLabel" type="Label" parent="HoardScreen"]
+offset_top = 8.0
+offset_right = 1280.0
+offset_bottom = 83.0
+theme = ExtResource("4_pqm74")
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 64
+text = "HOARD INCOMING!"
+horizontal_alignment = 1
 
 [node name="CRTFilter" type="Control" parent="."]
 visible = false

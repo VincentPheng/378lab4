@@ -1,0 +1,14 @@
+[remap]
+
+importer="dialogue_manager_compiler_8"
+type="Resource"
+uid="uid://d1vt7gfyvo0u7"
+path="res://.godot/imported/fire_extinguished.dialogue-0b323e5288c2a4b8768d3d97baa3a9ec.tres"
+
+[deps]
+
+source_file="res://dialogue/fire_extinguished.dialogue"
+dest_files=["res://.godot/imported/fire_extinguished.dialogue-0b323e5288c2a4b8768d3d97baa3a9ec.tres"]
+
+[params]
+

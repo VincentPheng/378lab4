@@ -5,7 +5,7 @@ extends Pickup
 
 var rng = RandomNumberGenerator.new()
 
-func _on_area_2d_area_entered(area):
+func _on_area_2d_area_entered(_area):
 	disable_collisions_play_sound()
 	PlayerData.projectiles_left += rng.randi_range(projectiles_per_box_lower, projectiles_per_box_upper)
 

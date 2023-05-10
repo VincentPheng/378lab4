@@ -1,0 +1,14 @@
+[remap]
+
+importer="dialogue_manager_compiler_8"
+type="Resource"
+uid="uid://b6e86t1yfc1vj"
+path="res://.godot/imported/fire.dialogue-cf844af1a840d3a9baee45dad86704e9.tres"
+
+[deps]
+
+source_file="res://dialogue/fire.dialogue"
+dest_files=["res://.godot/imported/fire.dialogue-cf844af1a840d3a9baee45dad86704e9.tres"]
+
+[params]
+

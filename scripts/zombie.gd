@@ -4,7 +4,6 @@ class_name Zombie
 @export var SPEED = 50
 @export var health = 10
 @export var permanent = false
-@export var loot_drop_chance = 10
 @export var damage = 10
 @export var knockback_multiplier = 50
 
@@ -20,6 +19,7 @@ var dead = false
 var in_player_range := false
 var despawn_range := false
 var loot: Array[Resource]
+var has_loot := false
 
 var last_delta
 var rng = RandomNumberGenerator.new()
@@ -36,19 +36,19 @@ func _ready():
 func _physics_process(delta):
 	last_delta = delta
 	if not permanent:
-		despawn_range = position.distance_to(player.position) > 300
+		despawn_range = position.distance_to(player.position) > 350
 		if despawn_range:
 			queue_free()
-	in_player_range = position.distance_to(player.position) < 200
+	in_player_range = position.distance_to(player.position) < 250
 	if in_player_range and not level.freeze_zombies:
-		var velocity = position.direction_to(player.position)
+		var p_velocity = position.direction_to(player.position)
 		should_flip_sprite(velocity.x)
-		push_object(move_and_collide(velocity * SPEED * delta))
+		push_object(move_and_collide(p_velocity * SPEED * delta))
 
-func knockback():
+func knockback(multiplier=knockback_multiplier):
 	collision_mask = 66
-	var velocity = position.direction_to(player.position) * -1
-	push_object(move_and_collide(velocity * SPEED * knockback_multiplier * last_delta))
+	var p_velocity = position.direction_to(player.position) * -1
+	push_object(move_and_collide(p_velocity * SPEED * multiplier * last_delta))
 	collision_mask = 70
 
 func push_object(collision):
@@ -71,27 +71,29 @@ func take_damage():
 	blood_instance.global_position = global_position
 	blood_instance.rotation = global_position.angle_to_point(player.global_position) + 180
 	if health <= 0:
-		dead = true
-		PlayerData.zombies_killed += 1
-		should_drop_loot()
 		$CollisionShape2D.set_deferred("disabled", true)
 		$ProjectileDetector/CollisionShape2D.set_deferred("disabled", true)
 		$PlayerDetector/CollisionShape2D.set_deferred("disabled", true)
+		$ProjectileBounceDetector/CollisionShape2D.set_deferred("disabled", true)
 		visible = false
+		dead = true
+		PlayerData.zombies_killed += 1
+		if has_loot:
+			drop_loot()
 	$HealthBar.value = health
 
-func should_drop_loot():
-	var roll = rng.randi_range(1, 100)
-	print(roll)
-	if roll <= loot_drop_chance:
-		var loot_instance = loot[rng.randi_range(0, len(loot) - 1)].instantiate()
-		get_tree().current_scene.call_deferred("add_child", loot_instance)
-		loot_instance.global_position = global_position
+func drop_loot():
+	var loot_instance = loot[rng.randi_range(0, len(loot) - 1)].instantiate()
+	get_tree().current_scene.call_deferred("add_child", loot_instance)
+	loot_instance.global_position = global_position
 
 func _on_projectile_detector_body_entered(body):
-	if (abs(body.linear_velocity.x) > 30 or abs(body.linear_velocity.y) > 30) and body not in damaged_by:
-		take_damage()
-		if not body.is_in_group("MoveableEnvironment"):
+	if body not in damaged_by:
+		if body.is_in_group("MoveableEnvironment"):
+			if (abs(body.linear_velocity.x) > 50 or abs(body.linear_velocity.y) > 50):
+				take_damage()
+		else:
+			take_damage()
 			body.fade()
 		damaged_by.append(body)
 

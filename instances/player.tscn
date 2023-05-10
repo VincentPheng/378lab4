@@ -1,6 +1,7 @@
-[gd_scene load_steps=29 format=3 uid="uid://bhc1flkqys1ud"]
+[gd_scene load_steps=32 format=3 uid="uid://bhc1flkqys1ud"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_wxukp"]
+[ext_resource type="Script" path="res://scripts/FireExtinguisherAttack.gd" id="2_kas2m"]
 [ext_resource type="Texture2D" uid="uid://dqvurj4wsjjdk" path="res://sprites/tom1.png" id="3_ywf58"]
 [ext_resource type="Texture2D" uid="uid://dqk31klx8al7i" path="res://sprites/tom2.png" id="4_6i34q"]
 [ext_resource type="Texture2D" uid="uid://biouadbw81ql2" path="res://sprites/tom_holding1.png" id="4_872oj"]
@@ -14,6 +15,7 @@
 [ext_resource type="AudioStream" uid="uid://b8fhl1jl5pbo4" path="res://sounds/coil_pickup.mp3" id="12_4sd0p"]
 [ext_resource type="AudioStream" uid="uid://bm4mch63iqr7s" path="res://sounds/Riff1.mp3" id="13_qdsd4"]
 [ext_resource type="AudioStream" uid="uid://vjd8c6x1jqk0" path="res://sounds/Riff2.mp3" id="14_1ri5n"]
+[ext_resource type="Texture2D" uid="uid://lawbnrq57q5i" path="res://sprites/fire_extinguisher_particle.png" id="15_uyat5"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_m0ems"]
 animations = [{
@@ -149,10 +151,50 @@ radius = 45.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_rvk3n"]
 radius = 75.0
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e8qiw"]
+size = Vector2(10, 26)
+
 [node name="Player" type="CharacterBody2D"]
-collision_mask = 66
+collision_mask = 578
 script = ExtResource("1_wxukp")
 SPEED = 100.0
+
+[node name="FireExtinguisherAttack" type="Area2D" parent="."]
+visible = false
+collision_layer = 128
+collision_mask = 4
+script = ExtResource("2_kas2m")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="FireExtinguisherAttack"]
+polygon = PackedVector2Array(0, 0, 47, -44, 68, 0, 48, 46)
+disabled = true
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="FireExtinguisherAttack"]
+amount = 100
+lifetime = 0.2
+texture = ExtResource("15_uyat5")
+emission_shape = 5
+emission_points = PackedVector2Array(0, 0)
+emission_normals = PackedVector2Array()
+emission_colors = PackedColorArray()
+gravity = Vector2(0, 0)
+initial_velocity_min = 326.08
+initial_velocity_max = 326.08
+angular_velocity_min = -47.11
+angular_velocity_max = 349.9
+scale_amount_min = 0.1
+scale_amount_max = 0.7
+
+[node name="DamageTimer" type="Timer" parent="FireExtinguisherAttack"]
+wait_time = 0.6
+
+[node name="CooldownTimer" type="Timer" parent="FireExtinguisherAttack"]
+wait_time = 30.0
+one_shot = true
+
+[node name="ActiveTimer" type="Timer" parent="FireExtinguisherAttack"]
+wait_time = 10.0
+one_shot = true
 
 [node name="PlayerAnimation" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_m0ems")
@@ -296,6 +338,16 @@ bus = &"Jerry"
 [node name="RiffTimer" type="Timer" parent="."]
 wait_time = 6.0
 
+[node name="EnemyProjectileDetector" type="Area2D" parent="."]
+collision_mask = 512
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyProjectileDetector"]
+position = Vector2(0, 2)
+shape = SubResource("RectangleShape2D_e8qiw")
+
+[connection signal="timeout" from="FireExtinguisherAttack/DamageTimer" to="FireExtinguisherAttack" method="_on_damage_timer_timeout"]
+[connection signal="timeout" from="FireExtinguisherAttack/ActiveTimer" to="FireExtinguisherAttack" method="_on_active_timer_timeout"]
 [connection signal="timeout" from="InvincibilityTimer" to="." method="_on_invincibility_timer_timeout"]
 [connection signal="timeout" from="LightningTimer" to="." method="_on_lightning_timer_timeout"]
 [connection signal="timeout" from="RiffTimer" to="." method="_on_riff_timer_timeout"]
+[connection signal="body_entered" from="EnemyProjectileDetector" to="." method="_on_enemy_projectile_detector_body_entered"]

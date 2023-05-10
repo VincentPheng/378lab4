@@ -10,6 +10,6 @@ func _ready():
 	hud = get_tree().current_scene.get_node("HUD")
 	level = get_tree().current_scene
 
-func _on_body_entered(body):
+func _on_body_entered(_body):
 	if len(level.objectives) <= 1:
 		hud.finish(next_scene)

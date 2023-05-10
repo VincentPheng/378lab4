@@ -1,0 +1,24 @@
+[gd_scene load_steps=2 format=3 uid="uid://c2nbkg7kl54eu"]
+
+[ext_resource type="Theme" uid="uid://xp6h1nwsksj4" path="res://hud.tres" id="1_o8yp2"]
+
+[node name="CanvasLayer" type="CanvasLayer"]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Label" type="Label" parent="."]
+offset_left = 288.0
+offset_top = 296.0
+offset_right = 976.0
+offset_bottom = 430.0
+theme = ExtResource("1_o8yp2")
+theme_override_font_sizes/font_size = 64
+text = "Demo End
+Thanks for playing!"
+horizontal_alignment = 1

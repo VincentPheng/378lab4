@@ -4,11 +4,10 @@ class_name CutsceneTrigger
 @export var dialogue_resource: DialogueResource
 @export var dialogue_start: String = "start"
 @export var collision: CollisionShape2D
+@export var is_active: bool = false
 
 var level: Level
 var player: Player
-
-var is_active: bool = false
 
 signal cutscene_end
 
@@ -17,7 +16,7 @@ func _ready():
 	player = level.get_node("Player")
 	DialogueManager.dialogue_ended.connect(_on_cutscene_end)
 
-func _on_body_entered(body):
+func _on_body_entered(_body):
 	if is_active:
 		level.freeze_zombies = true
 		player.talking = true

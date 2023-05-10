@@ -1,0 +1,14 @@
+[remap]
+
+importer="dialogue_manager_compiler_8"
+type="Resource"
+uid="uid://d0aool80aulp5"
+path="res://.godot/imported/holdout_2.dialogue-4755925fd54b7280520e62df0619d407.tres"
+
+[deps]
+
+source_file="res://dialogue/holdout_2.dialogue"
+dest_files=["res://.godot/imported/holdout_2.dialogue-4755925fd54b7280520e62df0619d407.tres"]
+
+[params]
+

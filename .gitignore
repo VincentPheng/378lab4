@@ -2,4 +2,5 @@
 .godot/
 build/
 build.zip
+*.zip
 

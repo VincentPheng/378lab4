@@ -7,6 +7,7 @@ var jerry_party := false
 var zombies_killed := 0
 var num_coils := 0
 var num_subwoofer := 0
+var has_fire_extinguisher := false
 
 var crt_enabled := true
 var crt_scanline_setting := 500

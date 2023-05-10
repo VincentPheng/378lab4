@@ -1,0 +1,14 @@
+[remap]
+
+importer="dialogue_manager_compiler_8"
+type="Resource"
+uid="uid://daehry5h3kayj"
+path="res://.godot/imported/fire_extinguisher.dialogue-40c2130bf57ef83fafb22551767e11c4.tres"
+
+[deps]
+
+source_file="res://dialogue/fire_extinguisher.dialogue"
+dest_files=["res://.godot/imported/fire_extinguisher.dialogue-40c2130bf57ef83fafb22551767e11c4.tres"]
+
+[params]
+

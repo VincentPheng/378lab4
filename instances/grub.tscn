@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://dwruhoji3riwd"]
+
+[ext_resource type="Script" path="res://scripts/grub.gd" id="1_d2lme"]
+[ext_resource type="Texture2D" uid="uid://i2bp1j1t7lcr" path="res://sprites/grub.png" id="1_qj8au"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5gi53"]
+radius = 6.0
+
+[node name="Grub" type="RigidBody2D"]
+collision_layer = 512
+mass = 0.01
+gravity_scale = 0.0
+max_contacts_reported = 1
+contact_monitor = true
+script = ExtResource("1_d2lme")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_qj8au")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_5gi53")
+
+[node name="LifeTimer" type="Timer" parent="."]
+wait_time = 4.0
+autostart = true
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="LifeTimer" to="." method="_on_life_timer_timeout"]
