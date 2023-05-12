@@ -5,6 +5,7 @@
 [node name="Spawner" type="Area2D" groups=["Spawner"]]
 collision_layer = 0
 script = ExtResource("1_4371k")
+loot_chance = 15.0
 
 [node name="SpawnTimer" type="Timer" parent="."]
 wait_time = 0.5

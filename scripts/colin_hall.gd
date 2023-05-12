@@ -17,6 +17,7 @@ func _on_holdout_timer_timeout():
 	for spawn_area in spawn_areas:
 		spawn_area.set_spawn_delay(3)
 		spawn_area.set_spawn_range_limit(200)
+		spawn_area.set_spawned_zombie_drop_rate(15)
 	$ForcedDialogue.force_dialogue()
 	$HoldoutDoors.queue_free()
 
@@ -31,4 +32,5 @@ func _on_holdout_trigger_cutscene_end():
 	for spawn_area in spawn_areas:
 		spawn_area.set_spawn_range_limit(130)
 		spawn_area.set_spawn_delay(0.5)
+		spawn_area.set_spawned_zombie_drop_rate(25)
 	$HoldoutTimer.start()

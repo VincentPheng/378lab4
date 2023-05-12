@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://bil1lmhbhmt4n"]
+
+[ext_resource type="PackedScene" uid="uid://c0fc44e1v3rbr" path="res://instances/book.tscn" id="1_ou6fv"]
+[ext_resource type="Texture2D" uid="uid://h8l8glcypyt8" path="res://sprites/eraser.png" id="2_6wrqq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lbx3h"]
+size = Vector2(16, 8)
+
+[node name="Eraser" instance=ExtResource("1_ou6fv")]
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_6wrqq")
+
+[node name="Hurtbox" parent="." index="1"]
+position = Vector2(0, 0)
+shape = SubResource("RectangleShape2D_lbx3h")

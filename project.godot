@@ -21,6 +21,7 @@ DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
 PlayerData="*res://scripts/player_data.gd"
 Enums="*res://scripts/enums.gd"
 DialogueLabel="*res://addons/dialogue_manager/dialogue_label.gd"
+RngUtils="*res://addons/rng_utils/rng_utils.gd"
 
 [display]
 
@@ -30,7 +31,7 @@ window/stretch/mode="viewport"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/dialogue_manager/plugin.cfg")
+enabled=PackedStringArray("res://addons/dialogue_manager/plugin.cfg", "res://addons/ui_design_tool/plugin.cfg", "res://addons/rng_utils/plugin.cfg")
 
 [input]
 

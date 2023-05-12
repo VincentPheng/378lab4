@@ -1,6 +1,6 @@
 extends Node
 
-var projectiles_left := 10
+var projectiles_left := 25
 var player_health := 100
 var dexter_party := false
 var jerry_party := false

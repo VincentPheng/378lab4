@@ -67,7 +67,6 @@ collision_layer = 4
 collision_mask = 70
 script = ExtResource("1_qaam1")
 health = 3
-loot_drop_chance = 15
 knockback_multiplier = 70
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -101,7 +100,6 @@ collision_priority = 10.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ProjectileDetector"]
 position = Vector2(2.38419e-07, 0.798844)
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_lujj1")
 
 [node name="HealthBar" type="ProgressBar" parent="."]
@@ -141,13 +139,12 @@ autostart = true
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 
-[node name="ProjectileBounceDetector" type="StaticBody2D" parent="."]
+[node name="ProjectileBounceDetector" type="StaticBody2D" parent="." groups=["Zombie"]]
 collision_layer = 256
 collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ProjectileBounceDetector"]
 position = Vector2(0.200988, -12.5706)
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_8u8rt")
 
 [connection signal="body_entered" from="PlayerDetector" to="." method="_on_player_detector_body_entered"]

@@ -3,6 +3,17 @@ class_name Player
 
 @onready var book_scn = preload("res://instances/book.tscn")
 @onready var stapler_scn = preload("res://instances/stapler.tscn")
+@onready var pencils_scn = preload("res://instances/pencils.tscn")
+@onready var ruler_scn = preload("res://instances/ruler.tscn")
+@onready var triangle_ruler_scn = preload("res://instances/triangle_ruler.tscn")
+@onready var eraser_scn = preload("res://instances/eraser.tscn")
+@onready var sharpener_scn = preload("res://instances/sharpener.tscn")
+@onready var tape_scn = preload("res://instances/tape.tscn")
+@onready var scissors_scn = preload("res://instances/scissors.tscn")
+@onready var calculator_scn = preload("res://instances/calculator.tscn")
+@onready var glue_scn = preload("res://instances/glue.tscn")
+@onready var trophy_scn = preload("res://instances/trophy.tscn")
+
 @onready var table_scn = preload("res://instances/table.tscn")
 @onready var table_sprite = preload("res://sprites/table.png")
 @onready var lightning_scn = preload("res://instances/lightning_effect.tscn")
@@ -17,7 +28,6 @@ class_name Player
 
 var projectiles
 var hud: HUD
-var rng = RandomNumberGenerator.new()
 var projectile_spawns
 var holding := ""
 var level: Level
@@ -34,7 +44,19 @@ func _ready():
 	currHealth = PlayerData.player_health
 	$HealthBar.value = currHealth
 	riffs = [$Riff1, $Riff2]
-	projectiles = [book_scn, stapler_scn]
+	projectiles = [
+		book_scn,
+		stapler_scn,
+		pencils_scn,
+		trophy_scn,
+		ruler_scn,
+		triangle_ruler_scn,
+		scissors_scn,
+		calculator_scn,
+		tape_scn,
+		eraser_scn,
+		sharpener_scn,
+		glue_scn]
 	projectile_spawns = [
 		$ProjectileSpawnTop,
 		$ProjectileSpawnBot,
@@ -53,7 +75,6 @@ func _ready():
 		$LightningTimer.start()
 	if PlayerData.jerry_party:
 		$RiffTimer.start()
-	
 
 func _physics_process(delta):
 	if not talking:
@@ -73,48 +94,57 @@ func _physics_process(delta):
 		play_walk_anim()
 		rotate_spawns()
 		push_object(move_and_collide(velocity * delta))
-		
 
 func _input(event):
 	if not talking:
-		if event.is_action_pressed("fire_extinguisher") and $FireExtinguisherAttack/CooldownTimer.is_stopped() and $FireExtinguisherAttack/ActiveTimer.is_stopped() and PlayerData.has_fire_extinguisher:
-			$FireExtinguisherAttack.visible = true
-			$FireExtinguisherAttack/CollisionPolygon2D.disabled = false
-			$FireExtinguisherAttack/DamageTimer.start()
-			$FireExtinguisherAttack/ActiveTimer.start()
+		if event.is_action_pressed("fire_extinguisher") and can_use_fire_extinguisher():
+			use_extinguisher()
 		if event.is_action_pressed("throw"):
 			throw()
 		if event.is_action_pressed("use") and holding == "":
-			var actionables = $ActionableFinder.get_overlapping_areas()
-			if actionables.size() > 0:
-				var actionable_type = actionables[0].action()
-				if actionable_type[0] == Enums.ActionableType.DIALOGUE:
-					talking = true
-					level.freeze_zombies = true
-				elif actionable_type[0] == Enums.ActionableType.INTERACTABLE:
-					$HoldingSprite.visible = true
-					$HoldingSprite.texture = table_sprite
-					$PlayerAnimation.play("holding_walking")
-					$PlayerAnimation.stop()
-					holding = actionable_type[1]
+			use()
 		if event.is_action_pressed("sprint") and currStamina > 0:
 			currSpeedMultipler = sprintSpeedMultiplier
 		if event.is_action_released("sprint"):
 			currSpeedMultipler = 1
 
+func use_extinguisher():
+	$FireExtinguisherAttack.visible = true
+	$FireExtinguisherAttack/CollisionPolygon2D.disabled = false
+	$FireExtinguisherAttack/DamageTimer.start()
+	$FireExtinguisherAttack/ActiveTimer.start()
+
+func use():
+	var actionables = $ActionableFinder.get_overlapping_areas()
+	if actionables.size() > 0:
+		var actionable_type = actionables[0].action()
+		if actionable_type[0] == Enums.ActionableType.DIALOGUE:
+			talking = true
+			level.freeze_zombies = true
+		elif actionable_type[0] == Enums.ActionableType.INTERACTABLE:
+			$HoldingSprite.visible = true
+			$HoldingSprite.texture = table_sprite
+			$PlayerAnimation.play("holding_walking")
+			$PlayerAnimation.stop()
+			holding = actionable_type[1]
+
 func take_damage(damage: int):
-	currHealth -= damage
-	$HealthBar.value = currHealth
-	if currHealth <= 0:
-		hud.dead()
-	else:
-		PlayerData.player_health = currHealth
-		player_camera.shake()
-		hud.hit()
-		invincible = true
-		$HurtSound.play()
-		$AnimationPlayer.play("take_damage")
-		$InvincibilityTimer.start()
+	if not invincible:
+		currHealth -= damage
+		$HealthBar.value = currHealth
+		if currHealth <= 0:
+			hud.dead()
+		else:
+			PlayerData.player_health = currHealth
+			player_camera.shake()
+			hud.hit()
+			invincible = true
+			$HurtSound.play()
+			$AnimationPlayer.play("take_damage")
+			$InvincibilityTimer.start()
+
+func can_use_fire_extinguisher():
+	return $FireExtinguisherAttack/CooldownTimer.is_stopped() and $FireExtinguisherAttack/ActiveTimer.is_stopped() and PlayerData.has_fire_extinguisher
 
 func update_health_bar():
 	$HealthBar.value = currHealth
@@ -125,7 +155,7 @@ func push_object(collision):
 		collision.get_collider().apply_impulse(-collision.get_normal() * collider.inertia)
 
 func instance_random_projectile():
-	return projectiles[rng.randi_range(0, len(projectiles) - 1)].instantiate()
+	return RngUtils.array(projectiles)[0].instantiate()
 
 func regen_stamina():
 	if currStamina < 100:
@@ -153,7 +183,7 @@ func throw():
 		projectile_spawn_point = get_closest_projectile_spawn()
 		projectile_to_throw.position = projectile_spawn_point.get_global_position()
 		projectile_to_throw.rotation_degrees = projectile_spawn_point.rotation_degrees
-		projectile_to_throw.rotation = rng.randf_range(-180, 180)
+		projectile_to_throw.rotation = RngUtils.float_range(-180, 180)
 		projectile_to_throw.apply_impulse(Vector2(500, 0).rotated(projectile_spawn_point.global_rotation))
 		get_tree().get_root().call_deferred("add_child", projectile_to_throw)
 		$ThrowSoundEffect.play()
@@ -223,7 +253,7 @@ func _on_lightning_timer_timeout():
 		for i in range(PlayerData.num_shock):
 			if len(zombies) <= 0:
 				break
-			var random_zombie_index = rng.randi_range(0, len(zombies) - 1)
+			var random_zombie_index = RngUtils.int_range(0, len(zombies) - 1)
 			var closest_zombie = zombies[random_zombie_index]
 			zombies.pop_at(random_zombie_index)
 			var lightning: Line2D = lightning_scn.instantiate()
@@ -238,7 +268,7 @@ func _on_invincibility_timer_timeout():
 	invincible = false
 
 func _on_riff_timer_timeout():
-	riffs[rng.randi_range(0, len(riffs) - 1)].play()
+	RngUtils.array(riffs)[0].play()
 	var rumble_particle_instance = rumble_scn.instantiate()
 	rumble_particle_instance.global_position = global_position
 	get_tree().current_scene.call_deferred("add_child", rumble_particle_instance)

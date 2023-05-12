@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://dtw3tml7e4uyf"]
+
+[ext_resource type="PackedScene" uid="uid://c0fc44e1v3rbr" path="res://instances/book.tscn" id="1_ofog5"]
+[ext_resource type="Texture2D" uid="uid://d365n61wbdka7" path="res://sprites/trophy.png" id="2_lwr1r"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ux5kr"]
+size = Vector2(14, 15)
+
+[node name="Trophy" instance=ExtResource("1_ofog5")]
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_lwr1r")
+
+[node name="Hurtbox" parent="." index="1"]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_ux5kr")

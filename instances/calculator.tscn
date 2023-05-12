@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://dbrjxmlhyiyyg"]
+
+[ext_resource type="PackedScene" uid="uid://c0fc44e1v3rbr" path="res://instances/book.tscn" id="1_4vftc"]
+[ext_resource type="Texture2D" uid="uid://ok7k0r7wkhul" path="res://sprites/calculator.png" id="2_rmnuc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_61t2y"]
+size = Vector2(12, 16)
+
+[node name="Calculator" instance=ExtResource("1_4vftc")]
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_rmnuc")
+
+[node name="Hurtbox" parent="." index="1"]
+position = Vector2(0, 0)
+shape = SubResource("RectangleShape2D_61t2y")

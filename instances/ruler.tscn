@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://cdwrkloajuap4"]
+
+[ext_resource type="PackedScene" uid="uid://c0fc44e1v3rbr" path="res://instances/book.tscn" id="1_k0pao"]
+[ext_resource type="Texture2D" uid="uid://fgm0kb4vmaic" path="res://sprites/ruler.png" id="2_1bkdn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2c0nw"]
+size = Vector2(6, 16)
+
+[node name="Ruler" instance=ExtResource("1_k0pao")]
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_1bkdn")
+
+[node name="Hurtbox" parent="." index="1"]
+position = Vector2(0, 0)
+shape = SubResource("RectangleShape2D_2c0nw")

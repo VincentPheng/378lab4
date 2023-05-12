@@ -630,6 +630,7 @@ visible = false
 navigation_polygon = SubResource("NavigationPolygon_bu73y")
 
 [node name="NavigationRegion2D3" type="NavigationRegion2D" parent="."]
+visible = false
 navigation_polygon = SubResource("NavigationPolygon_eb747")
 
 [node name="NavigationRegion2D2" type="NavigationRegion2D" parent="."]
@@ -713,6 +714,18 @@ shape = SubResource("RectangleShape2D_3eaq0")
 [node name="Amogus" type="Sprite2D" parent="."]
 position = Vector2(24, -1512)
 texture = ExtResource("30_husof")
+
+[node name="HealthPack3" parent="." instance=ExtResource("28_mdr1e")]
+position = Vector2(-96, -1124)
+
+[node name="HealthPack4" parent="." instance=ExtResource("28_mdr1e")]
+position = Vector2(-182, -1420)
+
+[node name="HealthPack5" parent="." instance=ExtResource("28_mdr1e")]
+position = Vector2(8, -1324)
+
+[node name="HealthPack6" parent="." instance=ExtResource("28_mdr1e")]
+position = Vector2(666, -1265)
 
 [connection signal="cutscene_end" from="HoldoutTrigger" to="." method="_on_holdout_trigger_cutscene_end"]
 [connection signal="timeout" from="HoldoutTimer" to="." method="_on_holdout_timer_timeout"]

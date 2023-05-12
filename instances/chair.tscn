@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://h64byn6u07m6"]
+
+[ext_resource type="PackedScene" uid="uid://ce6r382q5lt5l" path="res://instances/table.tscn" id="1_jf60y"]
+[ext_resource type="Texture2D" uid="uid://cr14pqres6yda" path="res://sprites/chair.png" id="2_2jpsl"]
+
+[node name="Chair" instance=ExtResource("1_jf60y")]
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_2jpsl")

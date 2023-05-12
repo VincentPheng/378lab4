@@ -1,0 +1,64 @@
+[gd_scene load_steps=6 format=3 uid="uid://deawbb82ohwmj"]
+
+[ext_resource type="Script" path="res://scripts/projectile.gd" id="1_dd3bq"]
+[ext_resource type="Texture2D" uid="uid://r50f30u3s7ep" path="res://sprites/triangle_ruler.png" id="2_pprpb"]
+
+[sub_resource type="Animation" id="Animation_nqyim"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_yrxsm"]
+resource_name = "delete"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7oofs"]
+_data = {
+"RESET": SubResource("Animation_nqyim"),
+"delete": SubResource("Animation_yrxsm")
+}
+
+[node name="TriangleRuler" type="RigidBody2D"]
+collision_layer = 8
+collision_mask = 262
+mass = 0.01
+gravity_scale = 0.0
+max_contacts_reported = 1
+contact_monitor = true
+script = ExtResource("1_dd3bq")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_pprpb")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Sprite2D")
+libraries = {
+"": SubResource("AnimationLibrary_7oofs")
+}
+
+[node name="HurtBox" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-8, -10, -8, 8, 10, 8)
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered" flags=18]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished" flags=18]

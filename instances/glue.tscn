@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://bcd1kxtyfe5gv"]
+
+[ext_resource type="PackedScene" uid="uid://c0fc44e1v3rbr" path="res://instances/book.tscn" id="1_har6l"]
+[ext_resource type="Texture2D" uid="uid://d16g3ka76yc0f" path="res://sprites/glue.png" id="2_n7aaw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dvdtu"]
+size = Vector2(9, 16)
+
+[node name="Glue" instance=ExtResource("1_har6l")]
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_n7aaw")
+
+[node name="Hurtbox" parent="." index="1"]
+position = Vector2(0.5, 0)
+shape = SubResource("RectangleShape2D_dvdtu")

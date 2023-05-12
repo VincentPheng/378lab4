@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://d02on81p54h55"]
+
+[ext_resource type="PackedScene" uid="uid://c0fc44e1v3rbr" path="res://instances/book.tscn" id="1_kj406"]
+[ext_resource type="Texture2D" uid="uid://gbgenlffr3wu" path="res://sprites/sharpener.png" id="2_u2hh0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wci33"]
+size = Vector2(9, 12)
+
+[node name="Sharpener" instance=ExtResource("1_kj406")]
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_u2hh0")
+
+[node name="Hurtbox" parent="." index="1"]
+position = Vector2(-0.5, 0)
+shape = SubResource("RectangleShape2D_wci33")

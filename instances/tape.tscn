@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://d3adkaabgy122"]
+
+[ext_resource type="PackedScene" uid="uid://c0fc44e1v3rbr" path="res://instances/book.tscn" id="1_v60qg"]
+[ext_resource type="Texture2D" uid="uid://csrxtq38ca6hi" path="res://sprites/tape.png" id="2_6m0bg"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_g64v8"]
+radius = 7.0
+
+[node name="Tape" instance=ExtResource("1_v60qg")]
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_6m0bg")
+
+[node name="Hurtbox" parent="." index="1"]
+position = Vector2(0, 0)
+shape = SubResource("CircleShape2D_g64v8")

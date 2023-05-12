@@ -42,7 +42,7 @@ func _physics_process(delta):
 	in_player_range = position.distance_to(player.position) < 250
 	if in_player_range and not level.freeze_zombies:
 		var p_velocity = position.direction_to(player.position)
-		should_flip_sprite(velocity.x)
+		should_flip_sprite(p_velocity.x)
 		push_object(move_and_collide(p_velocity * SPEED * delta))
 
 func knockback(multiplier=knockback_multiplier):
@@ -92,6 +92,8 @@ func _on_projectile_detector_body_entered(body):
 		if body.is_in_group("MoveableEnvironment"):
 			if (abs(body.linear_velocity.x) > 50 or abs(body.linear_velocity.y) > 50):
 				take_damage()
+		elif body.is_in_group("EnemyProjectile"):
+			take_damage()
 		else:
 			take_damage()
 			body.fade()

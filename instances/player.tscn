@@ -154,7 +154,7 @@ radius = 75.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_e8qiw"]
 size = Vector2(10, 26)
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
 collision_mask = 578
 script = ExtResource("1_wxukp")
 SPEED = 100.0
@@ -186,7 +186,7 @@ scale_amount_min = 0.1
 scale_amount_max = 0.7
 
 [node name="DamageTimer" type="Timer" parent="FireExtinguisherAttack"]
-wait_time = 0.6
+wait_time = 0.2
 
 [node name="CooldownTimer" type="Timer" parent="FireExtinguisherAttack"]
 wait_time = 30.0

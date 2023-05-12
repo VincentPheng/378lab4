@@ -3,7 +3,6 @@
 [ext_resource type="Script" path="res://scripts/zombie.gd" id="1_8qj23"]
 [ext_resource type="Texture2D" uid="uid://fudvjp052yg1" path="res://sprites/zombie1.png" id="1_21udh"]
 [ext_resource type="Theme" uid="uid://xp6h1nwsksj4" path="res://hud.tres" id="3_mdj76"]
-[ext_resource type="AudioStream" uid="uid://or01olst6fju" path="res://sounds/zombie_hit_1.mp3" id="4_xg75g"]
 [ext_resource type="AudioStream" uid="uid://b5d7ftuh5ymm" path="res://sounds/zombie_hit_2.mp3" id="5_nc4ef"]
 [ext_resource type="AudioStream" uid="uid://dcbphv631hp3w" path="res://sounds/zombie_hit_3.mp3" id="6_gqomb"]
 [ext_resource type="AudioStream" uid="uid://d080se4tuippj" path="res://sounds/zombie_noise_1.mp3" id="7_8difw"]
@@ -56,6 +55,9 @@ size = Vector2(14.1032, 31.9694)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2g3ci"]
 size = Vector2(10, 15)
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_705lq"]
+playback_mode = 1
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_acg1i"]
 size = Vector2(6.24223, 18.4995)
@@ -116,7 +118,7 @@ value = 10.0
 show_percentage = false
 
 [node name="HitSound1" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("4_xg75g")
+stream = SubResource("AudioStreamRandomizer_705lq")
 
 [node name="HitSound2" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_nc4ef")
@@ -140,7 +142,7 @@ volume_db = 10.0
 wait_time = 2.0
 autostart = true
 
-[node name="ProjectileBounceDetector" type="StaticBody2D" parent="."]
+[node name="ProjectileBounceDetector" type="StaticBody2D" parent="." groups=["Zombie"]]
 collision_layer = 256
 collision_mask = 8
 

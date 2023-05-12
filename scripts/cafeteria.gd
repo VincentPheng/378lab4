@@ -18,6 +18,7 @@ func _ready():
 			}
 		]
 		spawn.set_zombie_types(types)
+		spawn.set_spawned_zombie_drop_rate(25)
 
 func _on_fire_trigger_cutscene_end():
 	complete_objective("Leave!")
@@ -37,7 +38,7 @@ func _on_fire_extinguished_trigger_cutscene_end():
 
 
 func _on_holdout_trigger_cutscene_end():
-	max_zombies = 65
+	max_zombies = 70
 	main_level_music_position = $MainLevelMusic.get_playback_position()
 	$MainLevelMusic.stop()
 	$HoldoutMusic.play()
@@ -46,7 +47,7 @@ func _on_holdout_trigger_cutscene_end():
 	for spawn_area in spawn_areas:
 		spawn_area.set_spawn_range_limit(130)
 		spawn_area.set_spawn_delay(0.5)
-		spawn_area.set_spawned_zombie_drop_rate(20)
+		spawn_area.set_spawned_zombie_drop_rate(40)
 	$HoldoutTimer.start()
 
 func _on_holdout_timer_timeout():
@@ -59,6 +60,6 @@ func _on_holdout_timer_timeout():
 	for spawn_area in spawn_areas:
 		spawn_area.set_spawn_delay(3)
 		spawn_area.set_spawn_range_limit(200)
-		spawn_area.set_spawned_zombie_drop_rate(15)
+		spawn_area.set_spawned_zombie_drop_rate(25)
 	$ForcedDialogue.force_dialogue()
 	$HoldoutDoors.queue_free()
