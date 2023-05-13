@@ -25,6 +25,8 @@ var zombie_drop_rate := 15
 var spawn_table
 var player: Player
 var spawn_range_limit := 200
+var zombie_damage := 15
+var zombie_speed := 50
 
 func _ready():
 	collision_shape = get_tree().current_scene.get_node(get_path()).get_child(1)
@@ -47,6 +49,8 @@ func _process(_delta):
 				if zombie_count < spawn_limit and can_spawn:
 					rng.randomize()
 					var zombie_instance: Zombie = get_zombie_type().instantiate()
+					zombie_instance.damage = zombie_damage
+					zombie_instance.SPEED = zombie_speed
 					var roll = rng.randi_range(1, 100)
 					if roll <= loot_chance:
 						zombie_instance.has_loot = true
@@ -54,6 +58,12 @@ func _process(_delta):
 					get_tree().current_scene.add_child(zombie_instance)
 					$SpawnTimer.start()
 					can_spawn = false
+
+func set_zombie_damage(new_dmg):
+	zombie_damage = new_dmg
+
+func set_zombie_speed(new_speed):
+	zombie_speed = new_speed
 
 func set_zombie_types(types):
 	zombie_types = types

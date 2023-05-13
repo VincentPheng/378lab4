@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://pfd7m6oxf50v"]
+[gd_scene load_steps=35 format=3 uid="uid://pfd7m6oxf50v"]
 
 [ext_resource type="Script" path="res://scripts/albert_hall.gd" id="1_44om7"]
 [ext_resource type="PackedScene" uid="uid://bhc1flkqys1ud" path="res://instances/player.tscn" id="1_kacfe"]
@@ -20,7 +20,7 @@
 [ext_resource type="PackedScene" uid="uid://cv3x4xt7ncsvd" path="res://instances/coil.tscn" id="18_dh6yx"]
 [ext_resource type="PackedScene" uid="uid://5rs0dmscwh2b" path="res://instances/subwoofer.tscn" id="19_c4ljq"]
 [ext_resource type="PackedScene" uid="uid://cptno8wvd8i2r" path="res://instances/exit_area.tscn" id="20_srsvf"]
-[ext_resource type="PackedScene" path="res://instances/health_pack.tscn" id="21_ayeo0"]
+[ext_resource type="PackedScene" uid="uid://dnrxadcrfurcn" path="res://instances/health_pack.tscn" id="21_ayeo0"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_khy3n"]
 texture = ExtResource("3_jcn3d")
@@ -108,19 +108,13 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ga0h5"]
-size = Vector2(176, 656)
+size = Vector2(176, 408)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uaek6"]
 size = Vector2(160, 577)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7y47l"]
 size = Vector2(528, 128)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_vcdys"]
-size = Vector2(176, 320)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_eimog"]
-size = Vector2(352, 144)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p50oa"]
 size = Vector2(128, 34)
@@ -149,6 +143,19 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 3
 theme_override_font_sizes/font_size = 16
 text = "Shift = Sprint"
+
+[node name="Label10" type="Label" parent="."]
+offset_left = -72.0
+offset_top = -456.0
+offset_right = 126.0
+offset_bottom = -418.0
+theme = ExtResource("4_u3t0e")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 16
+text = "Hold Left Mouse Button
+ = Auto Throw"
+horizontal_alignment = 1
 
 [node name="Label8" type="Label" parent="."]
 offset_left = 72.0
@@ -302,7 +309,6 @@ volume_db = -5.0
 autoplay = true
 
 [node name="Spawners" type="Node2D" parent="."]
-visible = false
 position = Vector2(-32, -560)
 
 [node name="Spawner5" parent="Spawners" node_paths=PackedStringArray("collision_shape") instance=ExtResource("11_wlqac")]
@@ -310,6 +316,7 @@ position = Vector2(56, -296)
 collision_shape = NodePath("CollisionShape2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Spawners/Spawner5"]
+position = Vector2(0, -124)
 shape = SubResource("RectangleShape2D_ga0h5")
 
 [node name="Spawner4" parent="Spawners" node_paths=PackedStringArray("collision_shape") instance=ExtResource("11_wlqac")]
@@ -325,21 +332,6 @@ collision_shape = NodePath("CollisionShape2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Spawners/Spawner3"]
 shape = SubResource("RectangleShape2D_7y47l")
-
-[node name="Spawner" parent="Spawners" node_paths=PackedStringArray("collision_shape") instance=ExtResource("11_wlqac")]
-position = Vector2(56, 300)
-collision_shape = NodePath("CollisionShape2D")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Spawners/Spawner"]
-position = Vector2(0, -100)
-shape = SubResource("RectangleShape2D_vcdys")
-
-[node name="Spawner2" parent="Spawners" node_paths=PackedStringArray("collision_shape") instance=ExtResource("11_wlqac")]
-position = Vector2(352, -56)
-collision_shape = NodePath("SpawnArea")
-
-[node name="SpawnArea" type="CollisionShape2D" parent="Spawners/Spawner2"]
-shape = SubResource("RectangleShape2D_eimog")
 
 [node name="Tables" type="Node2D" parent="."]
 position = Vector2(-344, -72)
@@ -726,3 +718,5 @@ horizontal_alignment = 2
 
 [node name="HealthPack2" parent="." instance=ExtResource("21_ayeo0")]
 position = Vector2(112, -504)
+
+[connection signal="difficulty_change" from="HUD" to="." method="_on_hud_difficulty_change"]

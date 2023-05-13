@@ -20,3 +20,8 @@ func _on_active_timer_timeout():
 	$CollisionPolygon2D.disabled = true
 	visible = false
 	$CooldownTimer.start()
+
+
+func _on_body_entered(body):
+	if body.is_in_group("EnemyProjectile"):
+		body.queue_free()

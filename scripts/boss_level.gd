@@ -25,6 +25,7 @@ func _ready():
 		spawn.set_zombie_types(types)
 		spawn.set_spawn_delay(5)
 		spawn.set_spawned_zombie_drop_rate(50)
+	_on_hud_difficulty_change()
 
 func _on_dialogue_ended(resource: DialogueResource):
 	var title = resource.get_titles()[0]
@@ -48,3 +49,36 @@ func _on_boss_zombie_phase_change(curr_phase):
 	else:
 		for spawn in spawn_areas:
 			spawn.set_spawn_delay(.5)
+
+
+func _on_hud_difficulty_change():
+	super.update_zombie_speed()
+	for spawn_area in spawn_areas:
+		match(PlayerData.difficulty):
+			0:
+				max_zombies = 50
+				spawn_area.set_spawn_delay(3)
+				spawn_area.set_spawn_range_limit(200)
+				spawn_area.set_spawned_zombie_drop_rate(80)
+			1:
+				max_zombies = 100
+				spawn_area.set_spawn_delay(1)
+				spawn_area.set_spawn_range_limit(200)
+				spawn_area.set_spawned_zombie_drop_rate(50)
+			2:
+				max_zombies = 160
+				spawn_area.set_spawn_delay(0.5)
+				spawn_area.set_spawn_range_limit(160)
+				spawn_area.set_spawned_zombie_drop_rate(20)
+
+
+func _on_boss_zombie_death():
+	complete_objective()
+	$HUD/HealthBar.visible = false
+	$Doors.queue_free()
+	$MainLevelMusic.stop()
+	$EndMusic.play()
+	$Spawners.queue_free()
+	var zombies = get_tree().get_nodes_in_group("Zombie")
+	for zombie in zombies:
+		zombie.queue_free()

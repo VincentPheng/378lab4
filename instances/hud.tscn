@@ -1,10 +1,11 @@
-[gd_scene load_steps=15 format=3 uid="uid://dld23s7sdxl3a"]
+[gd_scene load_steps=16 format=3 uid="uid://dld23s7sdxl3a"]
 
 [ext_resource type="Script" path="res://scripts/hud.gd" id="1_6xcc1"]
 [ext_resource type="Texture2D" uid="uid://bug2uci048bta" path="res://sprites/cursor.png" id="2_aps4n"]
 [ext_resource type="Theme" uid="uid://xp6h1nwsksj4" path="res://hud.tres" id="4_pqm74"]
 [ext_resource type="Shader" path="res://scenes/test_level.gdshader" id="6_7yut1"]
 [ext_resource type="Texture2D" uid="uid://bg0hyj460m7uc" path="res://sprites/stapler2.png" id="6_y8ybp"]
+[ext_resource type="StyleBox" uid="uid://b6adhj3y5wwue" path="res://no_bg_button.tres" id="7_812c7"]
 [ext_resource type="Texture2D" uid="uid://b3lmb5grcveq2" path="res://sprites/pencils1.png" id="7_sv8kj"]
 [ext_resource type="Texture2D" uid="uid://d12ro65dnav0b" path="res://sprites/book1.png" id="8_njk7t"]
 [ext_resource type="Texture2D" uid="uid://cf6ie7pmlux12" path="res://sprites/hud_hit.png" id="8_vc7tq"]
@@ -59,10 +60,10 @@ process_mode = 3
 script = ExtResource("1_6xcc1")
 
 [node name="BoxCount" type="Label" parent="."]
-offset_left = 1088.0
-offset_top = 656.0
-offset_right = 1208.0
-offset_bottom = 723.0
+offset_left = 536.0
+offset_top = 7.0
+offset_right = 656.0
+offset_bottom = 74.0
 theme = ExtResource("4_pqm74")
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
@@ -71,17 +72,17 @@ theme_override_font_sizes/font_size = 64
 text = "000"
 
 [node name="Stapler2" type="Sprite2D" parent="."]
-position = Vector2(1226, 665)
+position = Vector2(674, 16)
 scale = Vector2(2, 2)
 texture = ExtResource("6_y8ybp")
 
 [node name="Pencils1" type="Sprite2D" parent="."]
-position = Vector2(1228, 692)
+position = Vector2(676, 43)
 scale = Vector2(2, 2)
 texture = ExtResource("7_sv8kj")
 
 [node name="Book1" type="Sprite2D" parent="."]
-position = Vector2(1254, 682)
+position = Vector2(702, 33)
 scale = Vector2(2, 2)
 texture = ExtResource("8_njk7t")
 
@@ -202,6 +203,53 @@ theme = ExtResource("4_pqm74")
 min_value = -20.0
 max_value = 0.0
 value = -15.0
+
+[node name="Difficulty" type="Label" parent="PauseScreen"]
+offset_left = 160.0
+offset_top = 600.0
+offset_right = 394.0
+offset_bottom = 635.0
+theme = ExtResource("4_pqm74")
+text = "Difficulty"
+horizontal_alignment = 2
+
+[node name="CurrentDifficulty" type="Label" parent="PauseScreen/Difficulty"]
+offset_left = 304.0
+offset_right = 600.0
+offset_bottom = 35.0
+theme = ExtResource("4_pqm74")
+text = "Say your prayers"
+horizontal_alignment = 1
+
+[node name="DecreaseDifficulty" type="Button" parent="PauseScreen/Difficulty"]
+layout_mode = 0
+offset_left = 264.0
+offset_right = 290.0
+offset_bottom = 40.0
+theme = ExtResource("4_pqm74")
+theme_override_colors/icon_normal_color = Color(0, 0, 0, 0)
+theme_override_colors/icon_pressed_color = Color(0, 0, 0, 0)
+theme_override_colors/icon_focus_color = Color(0, 0, 0, 0)
+theme_override_styles/normal = ExtResource("7_812c7")
+theme_override_styles/hover = ExtResource("7_812c7")
+theme_override_styles/pressed = ExtResource("7_812c7")
+theme_override_styles/disabled = ExtResource("7_812c7")
+theme_override_styles/focus = ExtResource("7_812c7")
+text = "<"
+icon_alignment = 1
+
+[node name="IncreaseDifficulty" type="Button" parent="PauseScreen/Difficulty"]
+layout_mode = 0
+offset_left = 616.0
+offset_right = 642.0
+offset_bottom = 40.0
+theme = ExtResource("4_pqm74")
+theme_override_styles/normal = ExtResource("7_812c7")
+theme_override_styles/hover = ExtResource("7_812c7")
+theme_override_styles/pressed = ExtResource("7_812c7")
+theme_override_styles/disabled = ExtResource("7_812c7")
+theme_override_styles/focus = ExtResource("7_812c7")
+text = ">"
 
 [node name="PausedLabel" type="Label" parent="PauseScreen"]
 offset_left = 544.0
@@ -369,6 +417,7 @@ offset_bottom = 728.0
 mouse_filter = 2
 
 [node name="Crosshair" type="Sprite2D" parent="."]
+scale = Vector2(3, 3)
 texture = ExtResource("2_aps4n")
 
 [node name="HitHud" type="TextureRect" parent="."]
@@ -388,6 +437,8 @@ libraries = {
 [connection signal="drag_ended" from="PauseScreen/ScanlineLabel/ScanlineSlider" to="." method="_on_scanline_slider_drag_ended"]
 [connection signal="drag_ended" from="PauseScreen/AudioLabel/AudioSlider" to="." method="_on_audio_slider_drag_ended"]
 [connection signal="drag_ended" from="PauseScreen/RiffAudioLabel/RiffAudioSlider" to="." method="_on_riff_audio_slider_drag_ended"]
+[connection signal="pressed" from="PauseScreen/Difficulty/DecreaseDifficulty" to="." method="_on_decrease_difficulty_pressed"]
+[connection signal="pressed" from="PauseScreen/Difficulty/IncreaseDifficulty" to="." method="_on_increase_difficulty_pressed"]
 [connection signal="pressed" from="PauseScreen/CRTFilterOptionLabel/CRTFilterOption" to="." method="_on_crt_filter_option_pressed"]
 [connection signal="drag_ended" from="PauseScreen/CRTWarpLabel/CRTWarpSlider" to="." method="_on_crt_warp_slider_drag_ended"]
 [connection signal="pressed" from="EndScreen/UpgradePartyButton" to="." method="_on_upgrade_party_button_pressed"]

@@ -162,7 +162,7 @@ SPEED = 100.0
 [node name="FireExtinguisherAttack" type="Area2D" parent="."]
 visible = false
 collision_layer = 128
-collision_mask = 4
+collision_mask = 516
 script = ExtResource("2_kas2m")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="FireExtinguisherAttack"]
@@ -313,6 +313,7 @@ collision_mask = 4
 shape = SubResource("CircleShape2D_3dse0")
 
 [node name="RiffInner" type="Area2D" parent="."]
+visible = false
 collision_layer = 128
 collision_mask = 4
 
@@ -320,6 +321,7 @@ collision_mask = 4
 shape = SubResource("CircleShape2D_64vk3")
 
 [node name="RiffOuter" type="Area2D" parent="."]
+visible = false
 collision_layer = 128
 collision_mask = 4
 
@@ -349,6 +351,7 @@ shape = SubResource("RectangleShape2D_e8qiw")
 wait_time = 0.2
 one_shot = true
 
+[connection signal="body_entered" from="FireExtinguisherAttack" to="FireExtinguisherAttack" method="_on_body_entered"]
 [connection signal="timeout" from="FireExtinguisherAttack/DamageTimer" to="FireExtinguisherAttack" method="_on_damage_timer_timeout"]
 [connection signal="timeout" from="FireExtinguisherAttack/ActiveTimer" to="FireExtinguisherAttack" method="_on_active_timer_timeout"]
 [connection signal="timeout" from="InvincibilityTimer" to="." method="_on_invincibility_timer_timeout"]

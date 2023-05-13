@@ -4,6 +4,8 @@ class_name HUD
 var filter_material: ShaderMaterial
 var next_scene: String
 
+signal difficulty_change
+
 func _ready():
 	$CRTFilter.visible = PlayerData.crt_enabled
 	$PauseScreen.visible = false
@@ -27,6 +29,8 @@ func _ready():
 	
 	PlayerData.riff_audio_setting = AudioServer.get_bus_volume_db(AudioServer.get_bus_index("Jerry"))
 	$PauseScreen/RiffAudioLabel/RiffAudioSlider.value = PlayerData.riff_audio_setting
+	
+	update_difficulty_text()
 
 func _input(event):
 	if event is InputEventMouseMotion:
@@ -110,3 +114,29 @@ func _on_riff_audio_slider_drag_ended(_value_changed):
 	PlayerData.riff_audio_setting = $PauseScreen/RiffAudioLabel/RiffAudioSlider.value
 	update_audio_setting("Jerry", PlayerData.riff_audio_setting)
 	
+
+func _on_decrease_difficulty_pressed():
+	if PlayerData.difficulty > 0:
+		PlayerData.difficulty -= 1
+		update_difficulty_text()
+		difficulty_change.emit()
+		
+
+func _on_increase_difficulty_pressed():
+	if PlayerData.difficulty < 2:
+		PlayerData.difficulty += 1
+		update_difficulty_text()
+		difficulty_change.emit()
+
+func update_difficulty_text():
+	match(PlayerData.difficulty):
+		0:
+			$PauseScreen/Difficulty/CurrentDifficulty.text = "Easy Peasy"
+		1:
+			$PauseScreen/Difficulty/CurrentDifficulty.text = "Normal"
+		2:
+			$PauseScreen/Difficulty/CurrentDifficulty.text = "Say your prayers"
+
+func _on_toggle_hoard():
+	$PauseScreen/Difficulty/DecreaseDifficulty.disabled = not $PauseScreen/Difficulty/DecreaseDifficulty.disabled
+	$PauseScreen/Difficulty/IncreaseDifficulty.disabled = not $PauseScreen/Difficulty/IncreaseDifficulty.disabled

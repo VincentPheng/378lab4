@@ -30,7 +30,7 @@
 [ext_resource type="PackedScene" uid="uid://cavxsqlktuqa2" path="res://instances/spawner.tscn" id="26_jm7lw"]
 [ext_resource type="PackedScene" uid="uid://cptno8wvd8i2r" path="res://instances/exit_area.tscn" id="27_edap8"]
 [ext_resource type="PackedScene" uid="uid://d2ov41m8wcdo5" path="res://instances/projectile_box.tscn" id="28_xgblq"]
-[ext_resource type="PackedScene" path="res://instances/health_pack.tscn" id="29_shq6g"]
+[ext_resource type="PackedScene" uid="uid://dnrxadcrfurcn" path="res://instances/health_pack.tscn" id="29_shq6g"]
 [ext_resource type="PackedScene" uid="uid://ce6r382q5lt5l" path="res://instances/table.tscn" id="30_f6ekq"]
 [ext_resource type="PackedScene" uid="uid://udriu1n23krm" path="res://instances/lunch_lady_zombie.tscn" id="31_g75m1"]
 
@@ -806,6 +806,7 @@ permanent = true
 visible = false
 navigation_polygon = SubResource("NavigationPolygon_55fku")
 
+[connection signal="difficulty_change" from="HUD" to="." method="_on_hud_difficulty_change"]
 [connection signal="cutscene_end" from="FireTrigger" to="." method="_on_fire_trigger_cutscene_end"]
 [connection signal="cutscene_end" from="FireExtinguishedTrigger" to="." method="_on_fire_extinguished_trigger_cutscene_end"]
 [connection signal="cutscene_end" from="FireExtinguisherCutscene/FireExtinguisherTrigger" to="." method="_on_fire_extinguisher_trigger_cutscene_end"]

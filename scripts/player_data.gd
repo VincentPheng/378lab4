@@ -14,6 +14,7 @@ var crt_scanline_setting := 500
 var crt_warp_setting := 4.5
 var audio_setting := -15.0
 var riff_audio_setting := -15.0
+var difficulty := 1
 
 var num_shock := 1
 var shock_cooldown := 5.0

@@ -27,7 +27,7 @@
 [ext_resource type="PackedScene" uid="uid://cv3x4xt7ncsvd" path="res://instances/coil.tscn" id="25_i8shk"]
 [ext_resource type="PackedScene" uid="uid://5rs0dmscwh2b" path="res://instances/subwoofer.tscn" id="26_gmjtt"]
 [ext_resource type="AudioStream" uid="uid://0jl01cdrovy5" path="res://sounds/spotifydown.com - Desecreation.mp3" id="27_5dc4x"]
-[ext_resource type="PackedScene" path="res://instances/health_pack.tscn" id="28_mdr1e"]
+[ext_resource type="PackedScene" uid="uid://dnrxadcrfurcn" path="res://instances/health_pack.tscn" id="28_mdr1e"]
 [ext_resource type="PackedScene" uid="uid://cptno8wvd8i2r" path="res://instances/exit_area.tscn" id="29_fo1md"]
 [ext_resource type="Texture2D" uid="uid://bd6dqjelp56xt" path="res://sprites/amogus.png" id="30_husof"]
 
@@ -727,5 +727,7 @@ position = Vector2(8, -1324)
 [node name="HealthPack6" parent="." instance=ExtResource("28_mdr1e")]
 position = Vector2(666, -1265)
 
+[connection signal="toggle_hoard" from="." to="HUD" method="_on_toggle_hoard"]
+[connection signal="difficulty_change" from="HUD" to="." method="_on_hud_difficulty_change"]
 [connection signal="cutscene_end" from="HoldoutTrigger" to="." method="_on_holdout_trigger_cutscene_end"]
 [connection signal="timeout" from="HoldoutTimer" to="." method="_on_holdout_timer_timeout"]

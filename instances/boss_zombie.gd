@@ -3,9 +3,7 @@ class_name BossZombie
 
 @export var SPEED = 50
 @export var health = 10
-@export var permanent = false
 @export var damage = 10
-@export var knockback_multiplier = 50
 
 var player
 var level
@@ -23,6 +21,7 @@ var grub_throw := true
 var curr_phase = 0
 
 signal phase_change(curr_phase)
+signal death
 
 func _ready():
 	level = get_tree().current_scene
@@ -40,7 +39,7 @@ func _physics_process(delta):
 			should_flip_sprite(p_velocity.x)
 			push_object(move_and_collide(p_velocity * SPEED * delta))
 
-func knockback(multiplier=knockback_multiplier):
+func knockback():
 	collision_mask = 66
 	var p_velocity = position.direction_to(player.position) * -1
 	push_object(move_and_collide(Vector2(0, 0)))
@@ -97,6 +96,7 @@ func take_damage():
 			visible = false
 			dead = true
 			PlayerData.zombies_killed += 1
+			death.emit()
 		healthbar.value = health
 
 func _on_projectile_detector_body_entered(body):
