@@ -15,8 +15,7 @@ func _ready():
 	spawn_areas = get_tree().get_nodes_in_group("Spawner")
 	hud.update_objective(objectives[-1])
 
-func complete_objective(objective: String):
-	if objectives[-1] == objective:
-		objectives.pop_back()
-		max_zombies += 10
-		hud.update_objective(objectives[-1])
+func complete_objective():
+	objectives.pop_back()
+	max_zombies += 10
+	hud.update_objective(objectives[-1])

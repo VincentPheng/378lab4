@@ -29,3 +29,20 @@ func _on_upgrade_shock_cooldown_button_pressed():
 		PlayerData.shock_cooldown -= 0.5
 		$DexterUpgrade/ShockCooldown.text = "%.1fs" % PlayerData.shock_cooldown
 		$CoilCountLabel.text = "%02d" % PlayerData.num_coils
+
+
+func _on_upgrade_damage_radius_button_pressed():
+	if PlayerData.num_subwoofer >= 1:
+		PlayerData.num_subwoofer -= 1
+		PlayerData.damage_radius += 10.0
+		$JerryUpgrade/DamageRadius.text = "%.1f" % PlayerData.damage_radius
+		$SubwooferCountLabel.text = "%02d" % PlayerData.num_subwoofer
+
+
+func _on_upgrade_knockback_radius_button_pressed():
+	if PlayerData.num_subwoofer >= 1:
+		PlayerData.num_subwoofer -= 1
+		PlayerData.knockback_radius += 10.0
+		$JerryUpgrade/KnockbackRadius.text = "%.1f" % PlayerData.knockback_radius
+		$SubwooferCountLabel.text = "%02d" % PlayerData.num_subwoofer
+		

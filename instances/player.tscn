@@ -202,6 +202,7 @@ animation = &"holding_walking"
 autoplay = "walking"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, 12)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_r7n1q")
@@ -312,7 +313,6 @@ collision_mask = 4
 shape = SubResource("CircleShape2D_3dse0")
 
 [node name="RiffInner" type="Area2D" parent="."]
-visible = false
 collision_layer = 128
 collision_mask = 4
 
@@ -320,7 +320,6 @@ collision_mask = 4
 shape = SubResource("CircleShape2D_64vk3")
 
 [node name="RiffOuter" type="Area2D" parent="."]
-visible = false
 collision_layer = 128
 collision_mask = 4
 
@@ -339,11 +338,16 @@ bus = &"Jerry"
 wait_time = 6.0
 
 [node name="EnemyProjectileDetector" type="Area2D" parent="."]
+visible = false
 collision_mask = 512
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyProjectileDetector"]
 position = Vector2(0, 2)
 shape = SubResource("RectangleShape2D_e8qiw")
+
+[node name="AutoThrowCooldown" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
 
 [connection signal="timeout" from="FireExtinguisherAttack/DamageTimer" to="FireExtinguisherAttack" method="_on_damage_timer_timeout"]
 [connection signal="timeout" from="FireExtinguisherAttack/ActiveTimer" to="FireExtinguisherAttack" method="_on_active_timer_timeout"]
@@ -351,3 +355,4 @@ shape = SubResource("RectangleShape2D_e8qiw")
 [connection signal="timeout" from="LightningTimer" to="." method="_on_lightning_timer_timeout"]
 [connection signal="timeout" from="RiffTimer" to="." method="_on_riff_timer_timeout"]
 [connection signal="body_entered" from="EnemyProjectileDetector" to="." method="_on_enemy_projectile_detector_body_entered"]
+[connection signal="timeout" from="AutoThrowCooldown" to="." method="_on_auto_throw_cooldown_timeout"]

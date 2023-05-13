@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/spotifydown.com - Desecreation.mp3-198635fc71
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0

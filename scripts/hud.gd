@@ -38,6 +38,9 @@ func _input(event):
 func _process(_delta):
 	$BoxCount.text = "%03d" % PlayerData.projectiles_left
 
+func toggle_objective_view():
+	$ObjectiveArea.visible = not $ObjectiveArea.visible
+
 func update_fire_extinguisher_cooldown_bar(progress):
 	$FireExtinguisherAbility/FireExtinguisherCooldownBar.value = progress
 

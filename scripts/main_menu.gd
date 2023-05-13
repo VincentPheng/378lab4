@@ -5,6 +5,7 @@ var loading_screen = preload("res://scenes/load.tscn")
 func _ready():
 	$GodotScreen.visible = true
 	$CreditScreen.visible = false
+	$ControlsScreen.visible = false
 
 func _on_start_button_pressed():
 	var loading_screen_instance = loading_screen.instantiate()
@@ -22,3 +23,11 @@ func _on_animation_player_animation_finished(anim_name):
 
 func _on_back_button_pressed():
 	$CreditScreen.visible = false
+
+
+func _on_controls_button_pressed():
+	$ControlsScreen.visible = true
+
+
+func _on_control_back_button_pressed():
+	$ControlsScreen.visible = false

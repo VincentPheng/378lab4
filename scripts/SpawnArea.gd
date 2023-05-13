@@ -14,6 +14,7 @@ var zombie = preload("res://instances/zombie.tscn")
 @export var loot_chance := 10.0
 
 var rng = RandomNumberGenerator.new()
+var enabled = true
 var area_size: Vector2
 var top_left: Vector2
 var bottom_right: Vector2
@@ -38,8 +39,8 @@ func _ready():
 
 func _process(_delta):
 	spawn_limit = get_tree().current_scene.max_zombies
-	if should_spawn:
-		if len(get_overlapping_bodies()) > 0 or global_position.distance_to(player.global_position) < 300:
+	if get_tree().current_scene.spawn_zombies:
+		if len(get_overlapping_bodies()) > 0 or collision_shape.global_position.distance_to(player.global_position) < 300:
 			var zombie_count = len(get_tree().get_nodes_in_group("Zombie"))
 			var rand_pos = Vector2(rng.randf_range(top_left.x, bottom_right.x), rng.randf_range(top_left.y, bottom_right.y))
 			if rand_pos.distance_to(get_tree().current_scene.get_node("Player").global_position) > spawn_range_limit:

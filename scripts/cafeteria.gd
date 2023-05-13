@@ -21,11 +21,11 @@ func _ready():
 		spawn.set_spawned_zombie_drop_rate(25)
 
 func _on_fire_trigger_cutscene_end():
-	complete_objective("Leave!")
+	complete_objective()
 	$FireExtinguisherCutscene/FireExtinguisherTrigger.is_active = true
 
 func _on_fire_extinguisher_trigger_cutscene_end():
-	complete_objective("Find fire extinguisher")
+	complete_objective()
 	PlayerData.has_fire_extinguisher = true
 	hud.enable_fire_extinguisher_icon()
 	$FireExtinguisherCutscene.queue_free()
@@ -33,7 +33,7 @@ func _on_fire_extinguisher_trigger_cutscene_end():
 
 
 func _on_fire_extinguished_trigger_cutscene_end():
-	complete_objective("Put out the fire")
+	complete_objective()
 	$FireArea.queue_free()
 
 
@@ -45,7 +45,7 @@ func _on_holdout_trigger_cutscene_end():
 	$PlayerCamera.set_target_zoom(Vector2(5, 5))
 	$HUD.toggle_hoard_screen()
 	for spawn_area in spawn_areas:
-		spawn_area.set_spawn_range_limit(130)
+		spawn_area.set_spawn_range_limit(150)
 		spawn_area.set_spawn_delay(0.5)
 		spawn_area.set_spawned_zombie_drop_rate(40)
 	$HoldoutTimer.start()

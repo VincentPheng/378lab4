@@ -1,6 +1,6 @@
 [gd_scene load_steps=37 format=3 uid="uid://pfd7m6oxf50v"]
 
-[ext_resource type="Script" path="res://scripts/level.gd" id="1_63ffp"]
+[ext_resource type="Script" path="res://scripts/albert_hall.gd" id="1_44om7"]
 [ext_resource type="PackedScene" uid="uid://bhc1flkqys1ud" path="res://instances/player.tscn" id="1_kacfe"]
 [ext_resource type="Texture2D" uid="uid://biihtmgl7ke71" path="res://sprites/placeholder_tile.png" id="2_l07d4"]
 [ext_resource type="PackedScene" uid="uid://dld23s7sdxl3a" path="res://instances/hud.tscn" id="2_r4dvs"]
@@ -20,7 +20,7 @@
 [ext_resource type="PackedScene" uid="uid://cv3x4xt7ncsvd" path="res://instances/coil.tscn" id="18_dh6yx"]
 [ext_resource type="PackedScene" uid="uid://5rs0dmscwh2b" path="res://instances/subwoofer.tscn" id="19_c4ljq"]
 [ext_resource type="PackedScene" uid="uid://cptno8wvd8i2r" path="res://instances/exit_area.tscn" id="20_srsvf"]
-[ext_resource type="PackedScene" uid="uid://dnfhxciio3vdq" path="res://instances/health_pack.tscn" id="21_ayeo0"]
+[ext_resource type="PackedScene" path="res://instances/health_pack.tscn" id="21_ayeo0"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_khy3n"]
 texture = ExtResource("3_jcn3d")
@@ -126,9 +126,8 @@ size = Vector2(352, 144)
 size = Vector2(128, 34)
 
 [node name="TestLevel" type="Node2D"]
-script = ExtResource("1_63ffp")
-max_zombies = 19
-objectives = Array[String](["LEAVE!", "Talk to Dexter"])
+script = ExtResource("1_44om7")
+objectives = Array[String](["Leave!", "Talk to Dexter"])
 
 [node name="TileMap2" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_u3ipp")

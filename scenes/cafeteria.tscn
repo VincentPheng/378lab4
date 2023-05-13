@@ -30,10 +30,9 @@
 [ext_resource type="PackedScene" uid="uid://cavxsqlktuqa2" path="res://instances/spawner.tscn" id="26_jm7lw"]
 [ext_resource type="PackedScene" uid="uid://cptno8wvd8i2r" path="res://instances/exit_area.tscn" id="27_edap8"]
 [ext_resource type="PackedScene" uid="uid://d2ov41m8wcdo5" path="res://instances/projectile_box.tscn" id="28_xgblq"]
-[ext_resource type="PackedScene" uid="uid://dnfhxciio3vdq" path="res://instances/health_pack.tscn" id="29_shq6g"]
+[ext_resource type="PackedScene" path="res://instances/health_pack.tscn" id="29_shq6g"]
 [ext_resource type="PackedScene" uid="uid://ce6r382q5lt5l" path="res://instances/table.tscn" id="30_f6ekq"]
 [ext_resource type="PackedScene" uid="uid://udriu1n23krm" path="res://instances/lunch_lady_zombie.tscn" id="31_g75m1"]
-[ext_resource type="PackedScene" uid="uid://b576yffocdqw2" path="res://instances/zombie.tscn" id="32_a8mqm"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_r4gyn"]
 texture = ExtResource("3_uqy1r")
@@ -192,16 +191,19 @@ size = Vector2(77, 214)
 size = Vector2(76, 200)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ioqxq"]
-size = Vector2(128, 212)
+size = Vector2(128, 206)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g005g"]
+size = Vector2(128, 206)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tkat4"]
-size = Vector2(112, 190)
+size = Vector2(112, 224)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_as64n"]
 size = Vector2(96, 168)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_eev0x"]
-size = Vector2(88, 204)
+size = Vector2(148, 128)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i8u5b"]
 size = Vector2(242, 64)
@@ -213,13 +215,13 @@ size = Vector2(126, 52)
 size = Vector2(376, 64)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_faqkd"]
-size = Vector2(96, 184)
+size = Vector2(160, 208)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ochmp"]
-size = Vector2(60, 204)
+size = Vector2(100, 236)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_osd0p"]
-size = Vector2(168, 68)
+size = Vector2(168, 120)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rd4su"]
 size = Vector2(224, 160)
@@ -228,7 +230,7 @@ size = Vector2(224, 160)
 size = Vector2(98, 134)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4epdv"]
-size = Vector2(230, 70)
+size = Vector2(230, 46)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wniuy"]
 size = Vector2(280, 48)
@@ -468,7 +470,6 @@ position = Vector2(-363, -1075)
 position = Vector2(-1041, -756)
 
 [node name="Spawners" type="Node2D" parent="."]
-visible = false
 
 [node name="Spawner" parent="Spawners" node_paths=PackedStringArray("collision_shape") instance=ExtResource("26_jm7lw")]
 position = Vector2(-773, 97)
@@ -507,8 +508,8 @@ position = Vector2(-773, 97)
 collision_shape = NodePath("CollisionShape2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Spawners/Spawner3"]
-position = Vector2(189, -293)
-shape = SubResource("RectangleShape2D_ioqxq")
+position = Vector2(189, -281)
+shape = SubResource("RectangleShape2D_g005g")
 
 [node name="Spawner4" parent="Spawners" node_paths=PackedStringArray("collision_shape") instance=ExtResource("26_jm7lw")]
 position = Vector2(-773, 97)
@@ -531,7 +532,7 @@ position = Vector2(-773, 97)
 collision_shape = NodePath("CollisionShape2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Spawners/Spawner24"]
-position = Vector2(605, -495)
+position = Vector2(575, -533)
 shape = SubResource("RectangleShape2D_eev0x")
 
 [node name="Spawner21" parent="Spawners" node_paths=PackedStringArray("collision_shape") instance=ExtResource("26_jm7lw")]
@@ -539,7 +540,7 @@ position = Vector2(-773, 97)
 collision_shape = NodePath("CollisionShape2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Spawners/Spawner21"]
-position = Vector2(597, -56)
+position = Vector2(597, -73)
 shape = SubResource("RectangleShape2D_tkat4")
 
 [node name="Spawner27" parent="Spawners" node_paths=PackedStringArray("collision_shape") instance=ExtResource("26_jm7lw")]
@@ -571,7 +572,7 @@ position = Vector2(-773, 97)
 collision_shape = NodePath("CollisionShape2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Spawners/Spawner22"]
-position = Vector2(381, -53)
+position = Vector2(413, -65)
 shape = SubResource("RectangleShape2D_faqkd")
 
 [node name="Spawner23" parent="Spawners" node_paths=PackedStringArray("collision_shape") instance=ExtResource("26_jm7lw")]
@@ -579,7 +580,7 @@ position = Vector2(-773, 97)
 collision_shape = NodePath("CollisionShape2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Spawners/Spawner23"]
-position = Vector2(363, -279)
+position = Vector2(383, -295)
 shape = SubResource("RectangleShape2D_ochmp")
 
 [node name="Spawner25" parent="Spawners" node_paths=PackedStringArray("collision_shape") instance=ExtResource("26_jm7lw")]
@@ -587,7 +588,7 @@ position = Vector2(-773, 97)
 collision_shape = NodePath("CollisionShape2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Spawners/Spawner25"]
-position = Vector2(561, -295)
+position = Vector2(561, -293)
 shape = SubResource("RectangleShape2D_osd0p")
 
 [node name="Spawner7" parent="Spawners" instance=ExtResource("26_jm7lw")]
@@ -608,7 +609,7 @@ shape = SubResource("RectangleShape2D_sufeq")
 position = Vector2(-496, -780)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Spawners/Spawner9"]
-position = Vector2(-439, 21)
+position = Vector2(-439, 9)
 shape = SubResource("RectangleShape2D_4epdv")
 
 [node name="Spawner10" parent="Spawners" instance=ExtResource("26_jm7lw")]
@@ -693,7 +694,7 @@ text = "EXIT"
 [node name="ExitArea" parent="." node_paths=PackedStringArray("collision_shape") instance=ExtResource("27_edap8")]
 position = Vector2(100, -136)
 collision_shape = NodePath("CollisionShape2D")
-next_scene = "res://scenes/demo_end.tscn"
+next_scene = "res://scenes/cafeteria_end_transition.tscn"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ExitArea"]
 position = Vector2(4, 6)
@@ -804,22 +805,6 @@ permanent = true
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
 visible = false
 navigation_polygon = SubResource("NavigationPolygon_55fku")
-
-[node name="LunchLadyZombie2" parent="." instance=ExtResource("31_g75m1")]
-position = Vector2(80, -88)
-permanent = true
-
-[node name="LunchLadyZombie3" parent="." instance=ExtResource("31_g75m1")]
-position = Vector2(128, -88)
-permanent = true
-
-[node name="Zombie" parent="." instance=ExtResource("32_a8mqm")]
-position = Vector2(96, -72)
-permanent = true
-
-[node name="Zombie2" parent="." instance=ExtResource("32_a8mqm")]
-position = Vector2(120, -72)
-permanent = true
 
 [connection signal="cutscene_end" from="FireTrigger" to="." method="_on_fire_trigger_cutscene_end"]
 [connection signal="cutscene_end" from="FireExtinguishedTrigger" to="." method="_on_fire_extinguished_trigger_cutscene_end"]

@@ -5,7 +5,7 @@ func _ready():
 	PlayerData.dexter_party = true
 	if PlayerData.jerry_party:
 		$HoldoutTrigger.is_active = true
-		complete_objective("Talk to Jerry")
+		complete_objective()
 
 func _on_holdout_timer_timeout():
 	$HoldoutTimer.stop()

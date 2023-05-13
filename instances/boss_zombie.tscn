@@ -1,0 +1,155 @@
+[gd_scene load_steps=16 format=3 uid="uid://bcq7sg6guwsk5"]
+
+[ext_resource type="Script" path="res://instances/boss_zombie.gd" id="1_xjxam"]
+[ext_resource type="Texture2D" uid="uid://ba24hxrd2xt5t" path="res://sprites/boss_zombie.png" id="1_xub6x"]
+[ext_resource type="AudioStream" uid="uid://or01olst6fju" path="res://sounds/zombie_hit_1.mp3" id="3_16ryt"]
+[ext_resource type="AudioStream" uid="uid://b5d7ftuh5ymm" path="res://sounds/zombie_hit_2.mp3" id="4_oq45h"]
+[ext_resource type="AudioStream" uid="uid://dcbphv631hp3w" path="res://sounds/zombie_hit_3.mp3" id="5_324lr"]
+[ext_resource type="AudioStream" uid="uid://d080se4tuippj" path="res://sounds/zombie_noise_1.mp3" id="6_6v64s"]
+[ext_resource type="AudioStream" uid="uid://vquptr3cu1a1" path="res://sounds/zombie_noise_2.mp3" id="7_ijow2"]
+[ext_resource type="AudioStream" uid="uid://t7182aucceah" path="res://sounds/zombie_attack.mp3" id="8_8dsgu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ba3ky"]
+size = Vector2(111, 113)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7fxfg"]
+size = Vector2(111, 112)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xotbc"]
+size = Vector2(61.5, 82.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_38byj"]
+size = Vector2(90.0001, 89.5002)
+
+[sub_resource type="Animation" id="Animation_us50i"]
+resource_name = "phase_switch"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2, 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8, 2.9, 3, 3.1, 3.2, 3.3, 3.4, 3.5, 3.6, 3.7, 3.8, 3.9, 4, 4.1, 4.2, 4.3, 4.4, 4.5, 4.6, 4.7, 4.8, 4.9, 5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 0.0196078, 0, 1), Color(1, 1, 1, 1), Color(1, 0.0196078, 0, 1), Color(1, 1, 1, 1), Color(1, 0.0196078, 0, 1), Color(1, 1, 1, 1), Color(1, 0.0196078, 0, 1), Color(1, 1, 1, 1), Color(1, 0.0196078, 0, 1), Color(1, 1, 1, 1), Color(1, 0.0196078, 0, 1), Color(1, 1, 1, 1), Color(1, 0.0196078, 0, 1), Color(1, 1, 1, 1), Color(1, 0.0196078, 0, 1), Color(1, 1, 1, 1), Color(1, 0.0196078, 0, 1), Color(1, 1, 1, 1), Color(1, 0.0196078, 0, 1), Color(1, 1, 1, 1), Color(1, 0.0196078, 0, 1), Color(1, 1, 1, 1), Color(1, 0.0196078, 0, 1), Color(1, 1, 1, 1), Color(1, 0.0196078, 0, 1), Color(1, 1, 1, 1), Color(1, 0.0196078, 0, 1), Color(1, 1, 1, 1), Color(1, 0.0196078, 0, 1), Color(1, 1, 1, 1), Color(1, 0.0196078, 0, 1), Color(1, 1, 1, 1), Color(1, 0.0196078, 0, 1), Color(1, 1, 1, 1), Color(1, 0.0196078, 0, 1), Color(1, 1, 1, 1), Color(1, 0.0196078, 0, 1), Color(1, 1, 1, 1), Color(1, 0.0196078, 0, 1), Color(1, 1, 1, 1), Color(1, 0.0196078, 0, 1), Color(1, 1, 1, 1), Color(1, 0.0196078, 0, 1), Color(1, 1, 1, 1), Color(1, 0.0196078, 0, 1), Color(1, 1, 1, 1), Color(1, 0.0196078, 0, 1), Color(1, 1, 1, 1), Color(1, 0.0196078, 0, 1), Color(1, 0.0196078, 0, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_ydtkl"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vvem1"]
+_data = {
+"RESET": SubResource("Animation_ydtkl"),
+"phase_switch": SubResource("Animation_us50i")
+}
+
+[node name="BossZombie" type="CharacterBody2D" groups=["Zombie"]]
+z_index = 10
+scale = Vector2(-1, 1)
+collision_layer = 1024
+collision_mask = 66
+script = ExtResource("1_xjxam")
+SPEED = 20
+health = 300
+damage = 75
+knockback_multiplier = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_xub6x")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(5, 7)
+shape = SubResource("RectangleShape2D_ba3ky")
+
+[node name="ProjectileDetector" type="Area2D" parent="."]
+visible = false
+collision_layer = 4
+collision_mask = 8
+collision_priority = 10.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ProjectileDetector"]
+position = Vector2(5.5, 6)
+scale = Vector2(1, 0.999999)
+shape = SubResource("RectangleShape2D_7fxfg")
+
+[node name="PlayerDetector" type="Area2D" parent="."]
+collision_layer = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetector"]
+position = Vector2(-5.75, 21.25)
+shape = SubResource("RectangleShape2D_xotbc")
+
+[node name="HitSound1" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_16ryt")
+
+[node name="HitSound2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_oq45h")
+
+[node name="HitSound3" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_324lr")
+
+[node name="MoanSound1" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_6v64s")
+volume_db = 5.0
+
+[node name="MoanSound2" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_ijow2")
+volume_db = 5.0
+
+[node name="AttackSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_8dsgu")
+volume_db = 10.0
+
+[node name="MoanTimer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
+[node name="ProjectileBounceDetector" type="StaticBody2D" parent="." groups=["Zombie"]]
+visible = false
+collision_layer = 256
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ProjectileBounceDetector"]
+position = Vector2(7, 4.25)
+scale = Vector2(0.999999, 0.999998)
+shape = SubResource("RectangleShape2D_38byj")
+
+[node name="InvincibilityTimer" type="Timer" parent="."]
+wait_time = 30.0
+one_shot = true
+
+[node name="GrubCooldownTimer" type="Timer" parent="."]
+wait_time = 10.0
+
+[node name="GrubAttackSpeedTimer" type="Timer" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_vvem1")
+}
+
+[connection signal="body_entered" from="ProjectileDetector" to="." method="_on_projectile_detector_body_entered"]
+[connection signal="body_entered" from="PlayerDetector" to="." method="_on_player_detector_body_entered"]
+[connection signal="finished" from="HitSound1" to="." method="_on_hit_sound_finished"]
+[connection signal="finished" from="HitSound2" to="." method="_on_hit_sound_finished"]
+[connection signal="finished" from="HitSound3" to="." method="_on_hit_sound_finished"]
+[connection signal="timeout" from="InvincibilityTimer" to="." method="_on_invincibility_timer_timeout"]
+[connection signal="timeout" from="GrubCooldownTimer" to="." method="_on_grub_cooldown_timer_timeout"]
+[connection signal="timeout" from="GrubAttackSpeedTimer" to="." method="_on_grub_attack_speed_timer_timeout"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

@@ -9,14 +9,16 @@ class_name PlayerCamera
 @onready var target_zoom = zoom
 
 var shake_strength := 0.0
+var enable_shake := true
 
 func _process(delta):
-	shake_strength = lerp(shake_strength, 0.0, shake_decay_rate * delta)
-	offset = get_random_offset()
-	if zoom > target_zoom:
-		zoom -= zoom_speed
-	elif zoom < target_zoom:
-		zoom += zoom_speed
+	if enable_shake:
+		shake_strength = lerp(shake_strength, 0.0, shake_decay_rate * delta)
+		offset = get_random_offset()
+		if zoom > target_zoom:
+			zoom -= zoom_speed
+		elif zoom < target_zoom:
+			zoom += zoom_speed
 
 func set_target_zoom(new_zoom: Vector2):
 	target_zoom = new_zoom

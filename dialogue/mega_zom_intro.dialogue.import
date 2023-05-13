@@ -1,0 +1,14 @@
+[remap]
+
+importer="dialogue_manager_compiler_8"
+type="Resource"
+uid="uid://cvk27ar0xqxal"
+path="res://.godot/imported/mega_zom_intro.dialogue-df6bbbd2ec62fa683babfbd4df438acf.tres"
+
+[deps]
+
+source_file="res://dialogue/mega_zom_intro.dialogue"
+dest_files=["res://.godot/imported/mega_zom_intro.dialogue-df6bbbd2ec62fa683babfbd4df438acf.tres"]
+
+[params]
+

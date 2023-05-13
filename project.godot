@@ -88,7 +88,7 @@ fire_extinguisher={
 
 [internationalization]
 
-locale/translations_pot_files=PackedStringArray("res://dialogue/main.dialogue", "res://dialogue/dexter_intro.dialogue", "res://dialogue/jerry_intro.dialogue", "res://dialogue/holdout.dialogue", "res://dialogue/holdout_end.dialogue", "res://dialogue/fire.dialogue", "res://dialogue/fire_extinguished.dialogue", "res://dialogue/fire_extinguisher.dialogue", "res://dialogue/holdout_2.dialogue")
+locale/translations_pot_files=PackedStringArray("res://dialogue/main.dialogue", "res://dialogue/dexter_intro.dialogue", "res://dialogue/jerry_intro.dialogue", "res://dialogue/holdout.dialogue", "res://dialogue/holdout_end.dialogue", "res://dialogue/fire.dialogue", "res://dialogue/fire_extinguished.dialogue", "res://dialogue/fire_extinguisher.dialogue", "res://dialogue/holdout_2.dialogue", "res://dialogue/mega_zom_intro.dialogue")
 
 [layer_names]
 
@@ -102,6 +102,7 @@ locale/translations_pot_files=PackedStringArray("res://dialogue/main.dialogue", 
 2d_physics/layer_8="Abilities"
 2d_physics/layer_9="Detectors"
 2d_physics/layer_10="EnemyProjectile"
+2d_physics/layer_11="Boss"
 
 [rendering]
 
